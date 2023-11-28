@@ -38,7 +38,13 @@ class Character {
     `);
   }
   addEXPPoints(indexSkill, points) {
-    return (this.skills[indexSkill].damage += points);
+    if (points > this.exp) {
+      console.log(`\nYou only have ${this.exp} points. You can't add more!`);
+    } else {
+      this.skills[indexSkill].damage += points;
+      this.exp -= points;
+      console.log(`\n${points} points were added successfully!`);
+    }
   }
 }
 
@@ -69,11 +75,13 @@ class RPGGame {
       round++;
     }
 
-    if(player.hp > 0){
-        player.exp += 20;
-        console.log(`\nCongratulations, ${player.name}. You are the Winner!\nYou receive 20 experience points.\n`);
+    if (player.hp > 0) {
+      player.exp += 5;
+      console.log(
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive 5 experience points.\n`
+      );
     } else {
-        console.log("\nYou have lost. Better next time!\n");
+      console.log("\nYou have lost. Better next time!\n");
     }
     // reset hp
     player.hp = 100;
@@ -124,52 +132,62 @@ console.clear();
 console.log(`__ Welcome to ${rPGGame.name} Game __`);
 // Choose or Create a character
 const player = chooseOrCreateCharacter();
-rs.question("Press Enter to continue...");
 
+rs.question("\nPress Enter to enter the Game...");
+
+// start the Game
 while (true) {
-    // start the Game
-    console.clear();
-    console.log(`__ Weolcome player ${player.name} __`);
-    console.log("\n1. Player vs player");
-    console.log("2. Explore a dungeon");
-    console.log("3. Open status");
-    console.log("4. Distribute experience points");
-    console.log("5. Exit");
-  
-    const choice = rs.question("Enter your choice: ");
-  
-    switch (choice) {
-      case "1":
-        // randon player to fight
-        const randomIndex = Math.floor(Math.random() * rPGGame.characters.length);
-        const target = rPGGame.characters[randomIndex];
-        // player vs player
-        console.log(`__ ${player.name} VS ${target.name} __\n`);
-        rPGGame.playerVsPlayer(player, target);
-        break;
-      case "2":
-        // explore dungeon
-        break;
-      case "3":
-        // open status
-        console.clear();
-        console.log("__ Player Status __");
-        console.log(player.openStatus());
-        break;
-      case "4":
-        // distribute points
-        break;
-      case "5":
-        // exit application
-        console.clear();
-        console.log("Sad to see you leave... Let's play again soon!");
-        process.exit();
-      default:
-        console.log("Invalid Input!");
-    }
-  
-    rs.question("Press Enter to continue...");
+  console.clear();
+  console.log(`__ Weolcome player ${player.name} __`);
+  console.log("\n1. Player vs player");
+  console.log("2. Explore a dungeon");
+  console.log("3. Open status");
+  console.log("4. Distribute experience points");
+  console.log("5. Exit");
+
+  const choice = rs.question("\nEnter your choice: ");
+
+  switch (choice) {
+    case "1":
+      // randon player to fight
+      const randomIndex = Math.floor(Math.random() * rPGGame.characters.length);
+      const target = rPGGame.characters[randomIndex];
+      // player vs player
+      console.log(`__ ${player.name} VS ${target.name} __\n`);
+      rPGGame.playerVsPlayer(player, target);
+      break;
+    case "2":
+      // explore dungeon
+      break;
+    case "3":
+      // open status
+      console.clear();
+      console.log("__ Player Status __");
+      console.log(player.openStatus());
+      break;
+    case "4":
+      // distribute points
+      console.clear();
+      console.log(`You have ${player.exp} point that you can distribute.\n`);
+      // list the skills to chose from then add the points to the damage of the chose skill
+      player.listSkills();
+      let indexSkill = Number(
+        rs.question("Select the index of the skill you want improve: ")
+      );
+      let points = Number(rs.question("How many points do you want to add? "));
+      player.addEXPPoints(indexSkill - 1, points);
+      break;
+    case "5":
+      // exit application
+      console.clear();
+      console.log("Sad to see you leave... Let's play again soon!");
+      process.exit();
+    default:
+      console.log("Invalid Input!");
   }
+
+  rs.question("\nPress Enter to continue...");
+}
 
 // functions
 function chooseOrCreateCharacter() {
@@ -177,7 +195,7 @@ function chooseOrCreateCharacter() {
   console.log("1. Create a new character");
   console.log("2. Choose an existing character");
 
-  const choice = rs.question("Enter your choice: ");
+  const choice = rs.question("\nEnter your choice: ");
 
   let player;
 
@@ -194,6 +212,7 @@ function chooseOrCreateCharacter() {
       const damage2 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
       const skill3 = rs.question("Enter the third skill: ");
       const damage3 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+
       player = new Character(name, job, [
         { skillName: skill1, damage: damage1 },
         { skillName: skill2, damage: damage2 },
@@ -202,6 +221,7 @@ function chooseOrCreateCharacter() {
 
       console.log("\nCharacter successfully created!");
       break;
+
     case "2":
       //list all default character
       console.clear();
