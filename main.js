@@ -142,6 +142,8 @@ class Dungeon {
       console.log(
         `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
       );
+      // before any floor reset hp
+      player.hp = 100;
       // fight monsters on each floor
       const floor = this.createFloor(monster);
       for (let i = 0; i < floor.length; i++) {
@@ -149,13 +151,15 @@ class Dungeon {
           `\nThere are still ${floor.length - i} ${monster.name}s on this floor.`
         );
         rPGGame.playerVsPlayer(player, floor[i]);
+        if(player.hp <= 0) break;
       }
-      // proceed to the next floor and reset hp
+      // proceed to the next floor 
       this.currentFloor++;
-      player.hp = 100;
     }
   }
   fightBoss(rPGGame, player) {
+    // reset player hp
+    player.hp= 100;
     console.clear();
     console.log(`__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`);
     rPGGame.playerVsPlayer(player, this.boss);
@@ -286,7 +290,12 @@ while (true) {
       console.clear();
       console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
       dungeon.fightMonsters(rPGGame, player);
-      dungeon.fightBoss(rPGGame, player);
+      // if player reaches the boss floor alive the fight the boss
+      if(player.hp > 0){
+        dungeon.fightBoss(rPGGame, player);
+      }
+      // reset player HP
+      player.hp = 100;
       break;
     case "3":
       // open status
