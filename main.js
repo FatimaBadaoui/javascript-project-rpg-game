@@ -77,12 +77,12 @@ class RPGGame {
   }
   playAsGuest() {
     this.listCharacters();
-      // choose one from the list
-      const indexCharacter = Number(
-        rs.question("Enter the index of the chosen character: ")
-      );
+    // choose one from the list
+    const indexCharacter = Number(
+      rs.question("Enter the index of the chosen character: ")
+    );
 
-      return this.characters[indexCharacter - 1];
+    return this.characters[indexCharacter - 1];
   }
   playerVsPlayer(player, target) {
     let round = 1;
@@ -172,12 +172,13 @@ const rPGGame = new RPGGame("Swords and Magic", [
 
 // Interaction
 
-console.clear();
-console.log(`__ Welcome to ${rPGGame.name} Game __`);
 // Choose or Create a character
-const player = chooseOrCreateCharacter();
-
-rs.question("\nPress Enter to enter the Game...");
+let player;
+while (!player) {
+  console.clear();
+  console.log(`__ Welcome to ${rPGGame.name} Game __`);
+  player = chooseOrCreateCharacter();
+}
 
 // start the Game
 while (true) {
@@ -259,8 +260,9 @@ function chooseOrCreateCharacter() {
       player = rPGGame.playAsGuest();
       break;
     default:
-      console.log("Invalid Input!");
-      return;
+      console.clear();
+      console.log("\nInvalid Input!");
+      rs.question("Press Enter to continue...");
   }
   return player;
 }
