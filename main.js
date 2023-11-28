@@ -57,36 +57,93 @@ class RPGGame {
 
 // create instances of default characters
 const char1 = new Character("Eowyn", "Knight", [
-    { skillName: "Pierce", damage: 15 },
-    { skillName: "Slash", damage: 8 },
-    { skillName: "Raging Blade", damage: 18 },
-  ]);
-  const char2 = new Character("Elora", "Fire Mage", [
-    { skillName: "Fireball", damage: 12 },
-    { skillName: "Fire Arrow", damage: 10 },
-    { skillName: "Inferno", damage: 20 },
-  ]);
-  const char3 = new Character("Galadriel", "Hunter", [
-    { skillName: "Attack Boost", damage: 8 },
-    { skillName: "Bombardier", damage: 15 },
-    { skillName: "Critical Boost", damage: 18 },
-  ]);
-  const char4 = new Character("Thalia", "Archer", [
-    { skillName: "Wind Arrow", damage: 10 },
-    { skillName: "Earth Blast", damage: 20 },
-    { skillName: "Vicious Arrow", damage: 15 },
-  ]);
-  const char5 = new Character("Darvin", "Necromancer", [
-    { skillName: "Skeleton Attack", damage: 10 },
-    { skillName: "Soul Curse", damage: 20 },
-    { skillName: "Corpse Explosion", damage: 17 },
-  ]);
-  
-  // Create an instance of the RPG Game
-  const rPGGame = new RPGGame("Swords and Magic", [
-    char1,
-    char2,
-    char3,
-    char4,
-    char5,
-  ]);
+  { skillName: "Pierce", damage: 15 },
+  { skillName: "Slash", damage: 8 },
+  { skillName: "Raging Blade", damage: 18 },
+]);
+const char2 = new Character("Elora", "Fire Mage", [
+  { skillName: "Fireball", damage: 12 },
+  { skillName: "Fire Arrow", damage: 10 },
+  { skillName: "Inferno", damage: 20 },
+]);
+const char3 = new Character("Galadriel", "Hunter", [
+  { skillName: "Attack Boost", damage: 8 },
+  { skillName: "Bombardier", damage: 15 },
+  { skillName: "Critical Boost", damage: 18 },
+]);
+const char4 = new Character("Thalia", "Archer", [
+  { skillName: "Wind Arrow", damage: 10 },
+  { skillName: "Earth Blast", damage: 20 },
+  { skillName: "Vicious Arrow", damage: 15 },
+]);
+const char5 = new Character("Darvin", "Necromancer", [
+  { skillName: "Skeleton Attack", damage: 10 },
+  { skillName: "Soul Curse", damage: 20 },
+  { skillName: "Corpse Explosion", damage: 17 },
+]);
+
+// Create an instance of the RPG Game
+const rPGGame = new RPGGame("Swords and Magic", [
+  char1,
+  char2,
+  char3,
+  char4,
+  char5,
+]);
+
+// Interaction
+
+console.clear();
+console.log(`__ Welcome to ${rPGGame.name} Game __`);
+// Choose or Create a character
+const player = chooseOrCreateCharacter();
+rs.question("Press Enter to continue...");
+
+// functions
+function chooseOrCreateCharacter() {
+  console.log("\nTo start playing create or choose your character\n");
+  console.log("1. Create a new character");
+  console.log("2. Choose an existing character");
+
+  const choice = rs.question("Enter your choice: ");
+
+  let player;
+
+  switch (choice) {
+    case "1":
+      // create new character
+      console.clear();
+      console.log("Let's create a new character!\n");
+      const name = rs.question("Enter the name: ");
+      const job = rs.question("Enter the class: ");
+      const skill1 = rs.question("Enter the first skill: ");
+      const damage1 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+      const skill2 = rs.question("Enter the second skill: ");
+      const damage2 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+      const skill3 = rs.question("Enter the third skill: ");
+      const damage3 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+      player = new Character(name, job, [
+        { skillName: skill1, damage: damage1 },
+        { skillName: skill2, damage: damage2 },
+        { skillName: skill3, damage: damage3 },
+      ]);
+
+      console.log("\nCharacter successfully created!");
+      break;
+    case "2":
+      //list all default character
+      console.clear();
+      console.log("List of the default characters:\n");
+      rPGGame.listCharacters();
+      // choose one from the list
+      const indexCharacter = Number(
+        rs.question("Enter the index of the chosen character: ")
+      );
+      player = rPGGame.characters[indexCharacter - 1];
+      break;
+    default:
+      console.log("Invalid Input!");
+      return;
+  }
+  return player;
+}
