@@ -54,3 +54,39 @@ class RPGGame {
     );
   }
 }
+
+// create instances of default characters
+const char1 = new Character("Eowyn", "Knight", [
+    { skillName: "Pierce", damage: 15 },
+    { skillName: "Slash", damage: 8 },
+    { skillName: "Raging Blade", damage: 18 },
+  ]);
+  const char2 = new Character("Elora", "Fire Mage", [
+    { skillName: "Fireball", damage: 12 },
+    { skillName: "Fire Arrow", damage: 10 },
+    { skillName: "Inferno", damage: 20 },
+  ]);
+  const char3 = new Character("Galadriel", "Hunter", [
+    { skillName: "Attack Boost", damage: 8 },
+    { skillName: "Bombardier", damage: 15 },
+    { skillName: "Critical Boost", damage: 18 },
+  ]);
+  const char4 = new Character("Thalia", "Archer", [
+    { skillName: "Wind Arrow", damage: 10 },
+    { skillName: "Earth Blast", damage: 20 },
+    { skillName: "Vicious Arrow", damage: 15 },
+  ]);
+  const char5 = new Character("Darvin", "Necromancer", [
+    { skillName: "Skeleton Attack", damage: 10 },
+    { skillName: "Soul Curse", damage: 20 },
+    { skillName: "Corpse Explosion", damage: 17 },
+  ]);
+  
+  // Create an instance of the RPG Game
+  const rPGGame = new RPGGame("Swords and Magic", [
+    char1,
+    char2,
+    char3,
+    char4,
+    char5,
+  ]);
