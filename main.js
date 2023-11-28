@@ -59,6 +59,31 @@ class RPGGame {
       console.log(`${index + 1}.\n ${character.openStatus()}`)
     );
   }
+  createNewcharacter() {
+    const name = rs.question("Enter the name: ");
+    const job = rs.question("Enter the class: ");
+    const skill1 = rs.question("Enter the first skill: ");
+    const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
+    const skill2 = rs.question("Enter the second skill: ");
+    const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
+    const skill3 = rs.question("Enter the third skill: ");
+    const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
+
+    return new Character(name, job, [
+      { skillName: skill1, damage: damage1 },
+      { skillName: skill2, damage: damage2 },
+      { skillName: skill3, damage: damage3 },
+    ]);
+  }
+  playAsGuest() {
+    this.listCharacters();
+      // choose one from the list
+      const indexCharacter = Number(
+        rs.question("Enter the index of the chosen character: ")
+      );
+
+      return this.characters[indexCharacter - 1];
+  }
   playerVsPlayer(player, target) {
     let round = 1;
     while (player.hp > 0 && target.hp > 0) {
@@ -93,18 +118,20 @@ class RPGGame {
 // define class to represent a Dungeon
 class Dungeon {
   constructor(name, numberOfFloors, monsters, boss) {
-    this.name = name; 
+    this.name = name;
     this.numberOfFloors = numberOfFloors;
     this.monsters = monsters;
     this.boss = boss;
     this.currentFloor = 1;
   }
-  fightMonsters(player){
-
+  fightMonsters(player) {
+    console.log(
+      `${player.name} has entered the floor number ${
+        this.currentFloor
+      }. This floor is inhabited by ${this.monsters[this.currentFloor - 1]}.`
+    );
   }
-  fightBoss(player){
-
-  }
+  fightBoss(player) {}
 }
 
 // create instances of default characters
@@ -221,34 +248,15 @@ function chooseOrCreateCharacter() {
       // create new character
       console.clear();
       console.log("Let's create a new character!\n");
-      const name = rs.question("Enter the name: ");
-      const job = rs.question("Enter the class: ");
-      const skill1 = rs.question("Enter the first skill: ");
-      const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-      const skill2 = rs.question("Enter the second skill: ");
-      const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-      const skill3 = rs.question("Enter the third skill: ");
-      const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-
-      player = new Character(name, job, [
-        { skillName: skill1, damage: damage1 },
-        { skillName: skill2, damage: damage2 },
-        { skillName: skill3, damage: damage3 },
-      ]);
-
+      player = rPGGame.createNewcharacter();
       console.log("\nCharacter successfully created!");
       break;
 
     case "2":
       //list all default character
       console.clear();
-      console.log("List of the default characters:\n");
-      rPGGame.listCharacters();
-      // choose one from the list
-      const indexCharacter = Number(
-        rs.question("Enter the index of the chosen character: ")
-      );
-      player = rPGGame.characters[indexCharacter - 1];
+      console.log("Choose from the List of the default characters:\n");
+      player = rPGGame.playAsGuest();
       break;
     default:
       console.log("Invalid Input!");
