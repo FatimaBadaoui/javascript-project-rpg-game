@@ -93,7 +93,10 @@ class RPGGame {
       player.listSkills();
       let indexSkill = Number(rs.question("Select the index of the skill: "));
       player.attack(target, indexSkill - 1);
-
+      // if the target is K.O. exit the while without the target attack
+      if(target.hp <= 0){
+        break;
+      }
       // target turn
       target.attack(player, Math.floor(Math.random() * 3));
 
