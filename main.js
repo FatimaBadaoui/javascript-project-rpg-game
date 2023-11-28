@@ -53,6 +53,7 @@ class RPGGame {
   constructor(name, characters = []) {
     this.name = name;
     this.characters = characters;
+    this.players = [];
   }
   listCharacters() {
     this.characters.forEach((character, index) =>
@@ -69,11 +70,14 @@ class RPGGame {
     const skill3 = rs.question("Enter the third skill: ");
     const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
 
-    return new Character(name, job, [
+    const player = new Character(name, job, [
       { skillName: skill1, damage: damage1 },
       { skillName: skill2, damage: damage2 },
       { skillName: skill3, damage: damage3 },
     ]);
+
+    this.players.push(player);
+    return player;
   }
   playAsGuest() {
     this.listCharacters();
@@ -151,7 +155,11 @@ class Dungeon {
       player.hp = 100;
     }
   }
-  fightBoss(player) {}
+  fightBoss(rPGGame, player) {
+    console.clear();
+    console.log(`__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`);
+    rPGGame.playerVsPlayer(player, this.boss);
+  }
 }
 
 // create instances of default characters
@@ -278,6 +286,7 @@ while (true) {
       console.clear();
       console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
       dungeon.fightMonsters(rPGGame, player);
+      dungeon.fightBoss(rPGGame, player);
       break;
     case "3":
       // open status
