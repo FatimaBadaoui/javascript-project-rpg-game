@@ -2,10 +2,10 @@ import rs from "readline-sync";
 
 // Define the class to represent the game character
 class Character {
-  constructor(name, job, skills = []) {
+  constructor(name, job = "", hp = 100, skills = []) {
     this.name = name;
     this.job = job;
-    this.hp = 100;
+    this.hp = hp;
     this.skills = skills;
     this.exp = 0;
   }
@@ -33,7 +33,7 @@ class Character {
     ${this.name}'s skills:
     ${this.skills.map(
       (skill, index) =>
-        `\n\t\t${index + 1}. ${skill.skillName} (${skill.damage} damage points)`
+        `\n\t${index + 1}. ${skill.skillName} (${skill.damage} damage points)`
     )}
     `);
   }
@@ -94,11 +94,11 @@ class RPGGame {
       let indexSkill = Number(rs.question("Select the index of the skill: "));
       player.attack(target, indexSkill - 1);
       // if the target is K.O. exit the while without the target attack
-      if(target.hp <= 0){
+      if (target.hp <= 0) {
         break;
       }
       // target turn
-      target.attack(player, Math.floor(Math.random() * 3));
+      target.attack(player, Math.floor(Math.random() * target.skills.length));
 
       round++;
     }
@@ -127,12 +127,21 @@ class Dungeon {
     this.boss = boss;
     this.currentFloor = 1;
   }
-  fightMonsters(player) {
-    console.log(
-      `${player.name} has entered the floor number ${
-        this.currentFloor
-      }. This floor is inhabited by ${this.monsters[this.currentFloor - 1]}.`
-    );
+  fightMonsters(rPGGame, player) {
+    while (player.hp > 0 && this.currentFloor < this.numberOfFloors) {
+      const monster = this.monsters[this.currentFloor - 1];
+      console.log(
+        `${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}.`
+      );
+      // fight monsters on each floor
+      for (let i = 0; i < 20; i++) {
+        console.log(`There are still ${20 - i} ${monster.name} on this floor.`);
+        rPGGame.playerVsPlayer(player, monster);
+      }
+      // proceed to the next floor and reset hp
+      this.currentFloor++;
+      player.hp = 100;
+    }
   }
   fightBoss(player) {}
 }
@@ -172,6 +181,29 @@ const rPGGame = new RPGGame("Swords and Magic", [
   char4,
   char5,
 ]);
+
+// Create Monsters characters and add the to the dungeon
+const slime = new Character("Slime", "Monster", 20, [
+  { skillName: "Bounce", damage: 5 },
+]);
+const goblin = new Character("Goblin", "Monster", 40, [
+  { skillName: "Toxic Slam", damage: 10 },
+]);
+const orc = new Character("Orc", "Monster", 60, [
+  { skillName: "Intimidation", damage: 12 },
+  { skillName: "Brute Punch", damage: 15 },
+]);
+const Lich = new Character("Lich", "Undead", 90, [
+  { skillName: "Paralise", damage: 15 },
+  { skillName: "Curse", damage: 20 },
+]);
+const dragon = new Character("Dragon", "Dragon", 120, [
+  { skillName: "Breath", damage: 18 },
+  { skillName: "Fire Storm", damage: 20 },
+  { skillName: "Rage", damage: 16 },
+]);
+
+const dungeon = new Dungeon("Dragon Lair", 5, [slime, goblin, orc, Lich], dragon);
 
 // Interaction
 
