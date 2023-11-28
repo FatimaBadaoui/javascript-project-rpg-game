@@ -2,7 +2,7 @@ import rs from "readline-sync";
 
 // Define the class to represent the game character
 class Character {
-  constructor(name, job = "", hp = 100, skills = []) {
+  constructor(name, job = "", skills = [], hp = 100) {
     this.name = name;
     this.job = job;
     this.hp = hp;
@@ -104,16 +104,13 @@ class RPGGame {
     }
 
     if (player.hp > 0) {
-      player.exp += 5;
+      player.exp += 1;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive 5 experience points.\n`
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive 1 experience points.\n`
       );
     } else {
       console.log("\nYou have lost. Better next time!\n");
     }
-    // reset hp
-    player.hp = 100;
-    target.hp = 100;
   }
   exploreDungeon() {}
 }
@@ -127,16 +124,27 @@ class Dungeon {
     this.boss = boss;
     this.currentFloor = 1;
   }
+  createFloor(monster) {
+    const floor = [];
+    for (let i = 0; i < 5; i++) {
+      floor.push(new Character(monster.name, monster.job, monster.skills, monster.hp));
+    }
+    return floor;
+  }
   fightMonsters(rPGGame, player) {
     while (player.hp > 0 && this.currentFloor < this.numberOfFloors) {
       const monster = this.monsters[this.currentFloor - 1];
+      console.clear();
       console.log(
-        `${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}.`
+        `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
       );
       // fight monsters on each floor
-      for (let i = 0; i < 20; i++) {
-        console.log(`There are still ${20 - i} ${monster.name} on this floor.`);
-        rPGGame.playerVsPlayer(player, monster);
+      const floor = this.createFloor(monster);
+      for (let i = 0; i < floor.length; i++) {
+        console.log(
+          `\nThere are still ${floor.length - i} ${monster.name}s on this floor.`
+        );
+        rPGGame.playerVsPlayer(player, floor[i]);
       }
       // proceed to the next floor and reset hp
       this.currentFloor++;
@@ -183,27 +191,53 @@ const rPGGame = new RPGGame("Swords and Magic", [
 ]);
 
 // Create Monsters characters and add the to the dungeon
-const slime = new Character("Slime", "Monster", 20, [
-  { skillName: "Bounce", damage: 5 },
-]);
-const goblin = new Character("Goblin", "Monster", 40, [
-  { skillName: "Toxic Slam", damage: 10 },
-]);
-const orc = new Character("Orc", "Monster", 60, [
-  { skillName: "Intimidation", damage: 12 },
-  { skillName: "Brute Punch", damage: 15 },
-]);
-const Lich = new Character("Lich", "Undead", 90, [
-  { skillName: "Paralise", damage: 15 },
-  { skillName: "Curse", damage: 20 },
-]);
-const dragon = new Character("Dragon", "Dragon", 120, [
-  { skillName: "Breath", damage: 18 },
-  { skillName: "Fire Storm", damage: 20 },
-  { skillName: "Rage", damage: 16 },
-]);
+const slime = new Character(
+  "Slime",
+  "Monster",
+  [{ skillName: "Bounce", damage: 5 }],
+  20
+);
+const goblin = new Character(
+  "Goblin",
+  "Monster",
+  [{ skillName: "Toxic Slam", damage: 10 }],
+  40
+);
+const orc = new Character(
+  "Orc",
+  "Monster",
+  [
+    { skillName: "Intimidation", damage: 12 },
+    { skillName: "Brute Punch", damage: 15 },
+  ],
+  60
+);
+const Lich = new Character(
+  "Lich",
+  "Undead",
+  [
+    { skillName: "Paralise", damage: 15 },
+    { skillName: "Curse", damage: 20 },
+  ],
+  90
+);
+const dragon = new Character(
+  "Dragon",
+  "Dragon",
+  [
+    { skillName: "Breath", damage: 18 },
+    { skillName: "Fire Storm", damage: 20 },
+    { skillName: "Rage", damage: 16 },
+  ],
+  120
+);
 
-const dungeon = new Dungeon("Dragon Lair", 5, [slime, goblin, orc, Lich], dragon);
+const dungeon = new Dungeon(
+  "Dragon Lair",
+  5,
+  [slime, goblin, orc, Lich],
+  dragon
+);
 
 // Interaction
 
@@ -235,9 +269,15 @@ while (true) {
       // player vs player
       console.log(`__ ${player.name} VS ${target.name} __\n`);
       rPGGame.playerVsPlayer(player, target);
+      // reset hp
+      player.hp = 100;
+      target.hp = 100;
       break;
     case "2":
       // explore dungeon
+      console.clear();
+      console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
+      dungeon.fightMonsters(rPGGame, player);
       break;
     case "3":
       // open status
