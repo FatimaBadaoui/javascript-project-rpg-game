@@ -96,6 +96,11 @@ class RPGGame {
       // choose the skill with which the player will attack the target
       player.listSkills();
       let indexSkill = Number(rs.question("Select the index of the skill: "));
+      // if input is invalid skip the code below and start again
+      if(indexSkill < 1 || indexSkill > player.skills.length){
+        console.log("\nINVALID INPUT! TRY AGAIN...\n");
+        continue;
+      }
       player.attack(target, indexSkill - 1);
       // if the target is K.O. exit the while without the target attack
       if (target.hp <= 0) {
@@ -143,7 +148,7 @@ class Dungeon {
         `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
       );
       // show info about the monster
-        console.log(`\n${monster.name} info:\n${monster.openStatus()}`);
+        console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
       // before any floor reset hp
       player.hp = 100;
       // fight monsters on each floor
