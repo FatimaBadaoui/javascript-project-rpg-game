@@ -90,10 +90,27 @@ class RPGGame {
   exploreDungeon() {}
 }
 
+// define class to represent a Dungeon
+class Dungeon {
+  constructor(name, numberOfFloors, monsters, boss) {
+    this.name = name; 
+    this.numberOfFloors = numberOfFloors;
+    this.monsters = monsters;
+    this.boss = boss;
+    this.currentFloor = 1;
+  }
+  fightMonsters(player){
+
+  }
+  fightBoss(player){
+
+  }
+}
+
 // create instances of default characters
 const char1 = new Character("Eowyn", "Knight", [
   { skillName: "Pierce", damage: 15 },
-  { skillName: "Slash", damage: 8 },
+  { skillName: "Slash", damage: 10 },
   { skillName: "Raging Blade", damage: 18 },
 ]);
 const char2 = new Character("Elora", "Fire Mage", [
@@ -102,7 +119,7 @@ const char2 = new Character("Elora", "Fire Mage", [
   { skillName: "Inferno", damage: 20 },
 ]);
 const char3 = new Character("Galadriel", "Hunter", [
-  { skillName: "Attack Boost", damage: 8 },
+  { skillName: "Attack Boost", damage: 12 },
   { skillName: "Bombardier", damage: 15 },
   { skillName: "Critical Boost", damage: 18 },
 ]);
@@ -207,11 +224,11 @@ function chooseOrCreateCharacter() {
       const name = rs.question("Enter the name: ");
       const job = rs.question("Enter the class: ");
       const skill1 = rs.question("Enter the first skill: ");
-      const damage1 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+      const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
       const skill2 = rs.question("Enter the second skill: ");
-      const damage2 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+      const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
       const skill3 = rs.question("Enter the third skill: ");
-      const damage3 = Math.round(Math.random() * 15) + 5; // damage from 5 to 20
+      const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
 
       player = new Character(name, job, [
         { skillName: skill1, damage: damage1 },
