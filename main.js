@@ -53,6 +53,33 @@ class RPGGame {
       console.log(`${index + 1}.\n ${character.openStatus()}`)
     );
   }
+  playerVsPlayer(player, target) {
+    let round = 1;
+    while (player.hp > 0 && target.hp > 0) {
+      console.log(`\n------- Round ${round} -------`);
+      // player starts
+      // choose the skill with which the player will attack the target
+      player.listSkills();
+      let indexSkill = Number(rs.question("Select the index of the skill: "));
+      player.attack(target, indexSkill - 1);
+
+      // target turn
+      target.attack(player, Math.floor(Math.random() * 3));
+
+      round++;
+    }
+
+    if(player.hp > 0){
+        player.exp += 20;
+        console.log(`\nCongratulations, ${player.name}. You are the Winner!\nYou receive 20 experience points.\n`);
+    } else {
+        console.log("\nYou have lost. Better next time!\n");
+    }
+    // reset hp
+    player.hp = 100;
+    target.hp = 100;
+  }
+  exploreDungeon() {}
 }
 
 // create instances of default characters
