@@ -2,12 +2,12 @@ import rs from "readline-sync";
 
 // Define the class to represent the game character
 class Character {
-  constructor(name, job = "", skills = [], hp = 100) {
+  constructor(name, job = "", skills = [], hp = 100, exp = 0) {
     this.name = name;
     this.job = job;
     this.hp = hp;
     this.skills = skills;
-    this.exp = 0;
+    this.exp = exp;
   }
   openStatus() {
     return `
@@ -108,7 +108,7 @@ class RPGGame {
     }
 
     if (player.hp > 0) {
-      player.exp += 1;
+      player.exp += target.exp === 0? 5 : target.exp;
       console.log(
         `\nCongratulations, ${player.name}. You are the Winner!\nYou receive 1 experience points.\n`
       );
@@ -142,6 +142,8 @@ class Dungeon {
       console.log(
         `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
       );
+      // show info about the monster
+        console.log(`\n${monster.name} info:\n${monster.openStatus()}`);
       // before any floor reset hp
       player.hp = 100;
       // fight monsters on each floor
@@ -207,13 +209,13 @@ const slime = new Character(
   "Slime",
   "Monster",
   [{ skillName: "Bounce", damage: 5 }],
-  20
+  20, 1
 );
 const goblin = new Character(
   "Goblin",
   "Monster",
   [{ skillName: "Toxic Slam", damage: 10 }],
-  40
+  40, 1
 );
 const orc = new Character(
   "Orc",
@@ -222,7 +224,7 @@ const orc = new Character(
     { skillName: "Intimidation", damage: 12 },
     { skillName: "Brute Punch", damage: 15 },
   ],
-  60
+  60, 2
 );
 const Lich = new Character(
   "Lich",
@@ -231,7 +233,7 @@ const Lich = new Character(
     { skillName: "Paralise", damage: 15 },
     { skillName: "Curse", damage: 20 },
   ],
-  90
+  90, 3
 );
 const dragon = new Character(
   "Dragon",
@@ -241,7 +243,7 @@ const dragon = new Character(
     { skillName: "Fire Storm", damage: 20 },
     { skillName: "Rage", damage: 16 },
   ],
-  120
+  120, 5
 );
 
 const dungeon = new Dungeon(
