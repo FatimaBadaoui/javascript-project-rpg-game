@@ -99,6 +99,51 @@ console.log(`__ Welcome to ${rPGGame.name} Game __`);
 const player = chooseOrCreateCharacter();
 rs.question("Press Enter to continue...");
 
+while (true) {
+    // start the Game
+    console.clear();
+    console.log(`__ Weolcome player ${player.name} __`);
+    console.log("\n1. Player vs player");
+    console.log("2. Explore a dungeon");
+    console.log("3. Open status");
+    console.log("4. Distribute experience points");
+    console.log("5. Exit");
+  
+    const choice = rs.question("Enter your choice: ");
+  
+    switch (choice) {
+      case "1":
+        // randon player to fight
+        const randomIndex = Math.floor(Math.random() * rPGGame.characters.length);
+        const target = rPGGame.characters[randomIndex];
+        // player vs player
+        console.log(`__ ${player.name} VS ${target.name} __\n`);
+        rPGGame.playerVsPlayer(player, target);
+        break;
+      case "2":
+        // explore dungeon
+        break;
+      case "3":
+        // open status
+        console.clear();
+        console.log("__ Player Status __");
+        console.log(player.openStatus());
+        break;
+      case "4":
+        // distribute points
+        break;
+      case "5":
+        // exit application
+        console.clear();
+        console.log("Sad to see you leave... Let's play again soon!");
+        process.exit();
+      default:
+        console.log("Invalid Input!");
+    }
+  
+    rs.question("Press Enter to continue...");
+  }
+
 // functions
 function chooseOrCreateCharacter() {
   console.log("\nTo start playing create or choose your character\n");
