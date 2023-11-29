@@ -168,6 +168,8 @@ class RPGGame {
     }
   }
   exploreDungeon(player, dungeon) {
+    console.log("\nDungeon's Info:\n", dungeon.displayInfo());
+    rs.question("\nPress Enter to explore the dungeon...");
     dungeon.fightMonsters(rPGGame, player);
     // if player reaches the boss floor alive then fight the boss
     if (player.hp > 0 && dungeon.currentFloor === dungeon.numberOfFloors) {
@@ -185,11 +187,27 @@ class Dungeon {
     this.boss = boss;
     this.currentFloor = 1;
   }
+  displayInfo() {
+    return `
+    _______________ ${this.name} _______________
+
+      - Number of Floors: ${this.numberOfFloors}
+      - Monsters: ${this.monsters.map((monster) => monster.name).join(", ")}
+      - Monster Boss: ${this.boss.name}
+    ____________________________________________
+    `;
+  }
   createFloor(monster) {
     const floor = [];
     for (let i = 0; i < 5; i++) {
       floor.push(
-        new Character(monster.name, monster.job, monster.skills, monster.hp, monster.exp)
+        new Character(
+          monster.name,
+          monster.job,
+          monster.skills,
+          monster.hp,
+          monster.exp
+        )
       );
     }
     return floor;
