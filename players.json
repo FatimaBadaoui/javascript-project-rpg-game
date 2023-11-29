@@ -7,7 +7,8 @@
       { "skillName": "Mighty Strike", "damage": 20 },
       { "skillName": "Shield Bash", "damage": 10 },
       { "skillName": "Raging Roar", "damage": 15 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Elara",
@@ -17,7 +18,8 @@
       { "skillName": "Fireball", "damage": 18 },
       { "skillName": "Frost Nova", "damage": 12 },
       { "skillName": "Arcane Blast", "damage": 20 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Liam",
@@ -27,7 +29,8 @@
       { "skillName": "Backstab", "damage": 18 },
       { "skillName": "Shadowstep", "damage": 10 },
       { "skillName": "Assassinate", "damage": 15 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Elysia",
@@ -37,7 +40,8 @@
       { "skillName": "Divine Strike", "damage": 20 },
       { "skillName": "Holy Shield", "damage": 15 },
       { "skillName": "Lay on Hands", "damage": 13 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Raine",
@@ -47,7 +51,8 @@
       { "skillName": "Precise Shot", "damage": 10 },
       { "skillName": "Rain of Arrows", "damage": 20 },
       { "skillName": "Explosive Shot", "damage": 15 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Aurelia",
@@ -57,7 +62,8 @@
       { "skillName": "Divine Retribution", "damage": 20 },
       { "skillName": "Smite", "damage": 10 },
       { "skillName": "Holy Light", "damage": 18 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Gareth",
@@ -67,7 +73,8 @@
       { "skillName": "Shield Slam", "damage": 15 },
       { "skillName": "Avenger's Strike", "damage": 20 },
       { "skillName": "Hammer of Justice", "damage": 12 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Seraphina",
@@ -77,7 +84,8 @@
       { "skillName": "Firestorm", "damage": 19 },
       { "skillName": "Arcane Explosion", "damage": 14 },
       { "skillName": "Shadow Bolt", "damage": 10 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Remy",
@@ -87,7 +95,8 @@
       { "skillName": "Stealthy Strike", "damage": 20 },
       { "skillName": "Poison Dagger", "damage": 17 },
       { "skillName": "Disengage", "damage": 12 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Luna",
@@ -97,7 +106,8 @@
       { "skillName": "Inspiring Melody", "damage": 12 },
       { "skillName": "Enchanting Performance", "damage": 10 },
       { "skillName": "Dazzling Flourish", "damage": 20 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Xander",
@@ -107,7 +117,8 @@
       { "skillName": "Flying Kick", "damage": 16 },
       { "skillName": "Chi Burst", "damage": 20 },
       { "skillName": "Serenity", "damage": 10 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Fiona",
@@ -117,7 +128,8 @@
       { "skillName": "Wrath", "damage": 17 },
       { "skillName": "Rejuvenation", "damage": 10 },
       { "skillName": "Claw Swipe", "damage": 20 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Cedric",
@@ -127,7 +139,8 @@
       { "skillName": "Skeleton Attack", "damage": 10 },
       { "skillName": "Death Bolt", "damage": 17 },
       { "skillName": "Soul Drain", "damage": 20 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Gwendolyn",
@@ -137,7 +150,8 @@
       { "skillName": "Shadow Bolt", "damage": 20 },
       { "skillName": "Curse of Agony", "damage": 17 },
       { "skillName": "Summon Voidwalker", "damage": 10 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Sylvan",
@@ -147,7 +161,8 @@
       { "skillName": "Aimed Shot", "damage": 17 },
       { "skillName": "Explosive Trap", "damage": 14 },
       { "skillName": "Call of the Wild", "damage": 11 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Evelyn",
@@ -157,7 +172,8 @@
       { "skillName": "Holy Smite", "damage": 20 },
       { "skillName": "Divine Protection", "damage": 15 },
       { "skillName": "Resurrection", "damage": 18 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Darius",
@@ -167,7 +183,8 @@
       { "skillName": "Rampage", "damage": 20 },
       { "skillName": "Berserk", "damage": 16 },
       { "skillName": "Cleave", "damage": 13 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Aria",
@@ -177,7 +194,8 @@
       { "skillName": "Enchanting Dance", "damage": 10 },
       { "skillName": "Poison Waltz", "damage": 15 },
       { "skillName": "Seductive Charm", "damage": 17 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Leif",
@@ -187,7 +205,8 @@
       { "skillName": "Feral Strike", "damage": 20 },
       { "skillName": "Summon Companion", "damage": 15 },
       { "skillName": "Rend", "damage": 13 }
-    ]
+    ],
+    "exp": 0
   },
   {
     "name": "Isolde",
@@ -197,6 +216,18 @@
       { "skillName": "Enchant Weapon", "damage": 14 },
       { "skillName": "Buff", "damage": 17 },
       { "skillName": "Arcane Infusion", "damage": 20 }
-    ]
+    ],
+    "exp": 0
+  },
+  {
+    "name": "Leo",
+    "job": "Knight",
+    "hp": 100,
+    "skills": [
+      { "skillName": "Slash", "damage": 14 },
+      { "skillName": "Pierce", "damage": 19 },
+      { "skillName": "Double Pierce", "damage": 12 }
+    ],
+    "exp": 0
   }
 ]

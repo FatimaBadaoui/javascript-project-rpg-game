@@ -1,4 +1,5 @@
 import rs from "readline-sync";
+import fs from "fs";
 
 // Define the class to represent the game character
 class Character {
@@ -53,8 +54,25 @@ class RPGGame {
   constructor(name, characters = []) {
     this.name = name;
     this.characters = characters;
-    this.players = [];
+    this.players = this.readPlayersFromJson();
   }
+  readPlayersFromJson(){
+    // check if the file exists
+    const filename = "players.json"
+    if (fs.existsSync(filename)) {
+      let rawData = fs.readFileSync(filename);
+      let playerObjects = JSON.parse(rawData);
+      return playerObjects.map(
+        (player) => new Character(player.name, player.job, player.skills)
+      );
+    } else {
+      return [];
+    }
+  }
+  savePlayersToJson(){
+    fs.writeFileSync("players.json", JSON.stringify(this.players))
+  }
+
   listCharacters() {
     this.characters.forEach((character, index) =>
       console.log(`${index + 1}.\n ${character.openStatus()}`)
@@ -77,6 +95,7 @@ class RPGGame {
     ]);
 
     this.players.push(player);
+    this.savePlayersToJson();
     return player;
   }
   playAsGuest() {
@@ -298,9 +317,11 @@ while (true) {
   switch (choice) {
     case "1":
       // randon player to fight
-      const randomIndex = Math.floor(Math.random() * rPGGame.characters.length);
-      const target = rPGGame.characters[randomIndex];
+      // by default length-1 because the last player is the player itself (in case the player created a new character)
+      const randomIndex = Math.floor(Math.random() * rPGGame.players.length - 1);
+      const target = rPGGame.players[randomIndex];
       // player vs player
+      console.clear();
       console.log(`__ ${player.name} VS ${target.name} __\n`);
       rPGGame.playerVsPlayer(player, target);
       // reset hp
