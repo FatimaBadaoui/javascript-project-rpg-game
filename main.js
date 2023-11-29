@@ -56,9 +56,9 @@ class RPGGame {
     this.characters = characters;
     this.players = this.readPlayersFromJson();
   }
-  readPlayersFromJson(){
+  readPlayersFromJson() {
     // check if the file exists
-    const filename = "players.json"
+    const filename = "players.json";
     if (fs.existsSync(filename)) {
       let rawData = fs.readFileSync(filename);
       let playerObjects = JSON.parse(rawData);
@@ -69,8 +69,8 @@ class RPGGame {
       return [];
     }
   }
-  savePlayersToJson(){
-    fs.writeFileSync("players.json", JSON.stringify(this.players))
+  savePlayersToJson() {
+    fs.writeFileSync("players.json", JSON.stringify(this.players));
   }
 
   listCharacters() {
@@ -81,10 +81,14 @@ class RPGGame {
   createNewcharacter() {
     const name = rs.question("Enter the name: ");
     // check if the name is already used by another player
-    const alreadyInUse = this.players.find(player => player.name.toLowerCase() === name);
-    
-    if(alreadyInUse !== undefined){
-      rs.question(`\nThe name ${name} has been already used. Press Enter to go back...`);
+    const alreadyInUse = this.players.find(
+      (player) => player.name.toLowerCase() === name
+    );
+
+    if (alreadyInUse !== undefined) {
+      rs.question(
+        `\nThe name ${name} has been already used. Press Enter to go back...`
+      );
       return undefined;
     }
     const job = rs.question("Enter the class: ");
@@ -105,11 +109,15 @@ class RPGGame {
     this.savePlayersToJson();
     return player;
   }
-  logBackIn(){
+  logBackIn() {
     const name = rs.question("\nEnter the name of your character: ");
-    const myCharacter = this.players.find(player => player.name.toLowerCase() === name);
-    if(myCharacter === undefined){
-      rs.question(`\nThe character ${name} doesn't exist! press Enter to go back...`);
+    const myCharacter = this.players.find(
+      (player) => player.name.toLowerCase() === name
+    );
+    if (myCharacter === undefined) {
+      rs.question(
+        `\nThe character ${name} doesn't exist! press Enter to go back...`
+      );
     }
     return myCharacter;
   }
@@ -153,7 +161,7 @@ class RPGGame {
     if (player.hp > 0) {
       player.exp += target.exp === 0 ? 5 : target.exp;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive 1 experience points.\n`
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${target.exp} experience points.\n`
       );
     } else {
       console.log("\nYou have lost. Better next time!\n");
@@ -161,10 +169,10 @@ class RPGGame {
   }
   exploreDungeon(player, dungeon) {
     dungeon.fightMonsters(rPGGame, player);
-      // if player reaches the boss floor alive then fight the boss
-      if (player.hp > 0 && dungeon.currentFloor === dungeon.numberOfFloors) {
-        dungeon.fightBoss(rPGGame, player);
-      }
+    // if player reaches the boss floor alive then fight the boss
+    if (player.hp > 0 && dungeon.currentFloor === dungeon.numberOfFloors) {
+      dungeon.fightBoss(rPGGame, player);
+    }
   }
 }
 
@@ -181,7 +189,7 @@ class Dungeon {
     const floor = [];
     for (let i = 0; i < 5; i++) {
       floor.push(
-        new Character(monster.name, monster.job, monster.skills, monster.hp)
+        new Character(monster.name, monster.job, monster.skills, monster.hp, monster.exp)
       );
     }
     return floor;
@@ -198,8 +206,10 @@ class Dungeon {
       // before any floor reset hp
       player.hp = 100;
       // continue exploring or exit the dungeon
-      const explore = rs.question("\nDo you want to explore this floor? (y | n): ");
-      if(!["y", "yes"].includes(explore.toLowerCase())){
+      const explore = rs.question(
+        "\nDo you want to explore this floor? (y | n): "
+      );
+      if (!["y", "yes"].includes(explore.toLowerCase())) {
         return this.currentFloor;
       }
       // fight monsters on each floor
@@ -211,7 +221,7 @@ class Dungeon {
           }s on this floor.`
         );
         rPGGame.playerVsPlayer(player, floor[i]);
-        if (player.hp <= 0) break;
+        if (player.hp <= 0) return;
       }
       // proceed to the next floor
       this.currentFloor++;
@@ -344,7 +354,9 @@ while (true) {
     case "1":
       // randon player to fight
       // by default length-1 because the last player is the player itself (in case the player created a new character)
-      const randomIndex = Math.floor(Math.random() * rPGGame.players.length - 1);
+      const randomIndex = Math.floor(
+        Math.random() * rPGGame.players.length - 1
+      );
       const target = rPGGame.players[randomIndex];
       // player vs player
       console.clear();
@@ -358,7 +370,7 @@ while (true) {
       // explore dungeon
       console.clear();
       console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
-      rPGGame.exploreDungeon(player, dungeon)
+      rPGGame.exploreDungeon(player, dungeon);
       // reset player HP
       player.hp = 100;
       break;
