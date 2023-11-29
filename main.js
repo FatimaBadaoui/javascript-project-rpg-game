@@ -81,7 +81,7 @@ class RPGGame {
   createNewcharacter() {
     const name = rs.question("Enter the name: ");
     // check if the name is already used by another player
-    const alreadyInUse = this.players.find(player => player.name === name);
+    const alreadyInUse = this.players.find(player => player.name.toLowerCase() === name);
     
     if(alreadyInUse !== undefined){
       rs.question(`\nThe name ${name} has been already used. Press Enter to go back...`);
@@ -104,6 +104,14 @@ class RPGGame {
     this.players.push(player);
     this.savePlayersToJson();
     return player;
+  }
+  logBackIn(){
+    const name = rs.question("\nEnter the name of your character: ");
+    const myCharacter = this.players.find(player => player.name.toLowerCase() === name);
+    if(myCharacter === undefined){
+      rs.question(`\nThe character ${name} doesn't exist! press Enter to go back...`);
+    }
+    return myCharacter;
   }
   playAsGuest() {
     this.listCharacters();
@@ -393,7 +401,8 @@ while (true) {
 function chooseOrCreateCharacter() {
   console.log("\nTo start playing create or choose your character\n");
   console.log("1. Create a new character");
-  console.log("2. Choose an existing character");
+  console.log("2. Play with your already created character");
+  console.log("3. Choose a default character and Play as a guest");
 
   const choice = rs.question("\nEnter your choice: ");
 
@@ -409,6 +418,12 @@ function chooseOrCreateCharacter() {
       break;
 
     case "2":
+      // Log in with your character
+      console.clear();
+      console.log("__ Log Back In __");
+      player = rPGGame.logBackIn();
+      break;
+    case "3":
       //list all default character
       console.clear();
       console.log("Choose from the List of the default characters:\n");
