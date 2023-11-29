@@ -28,6 +28,7 @@
     "test": ""
   },
   "dependencies": {
+    "colors": "^1.4.0",
     "readline-sync": "^1.4.10"
   }
 }

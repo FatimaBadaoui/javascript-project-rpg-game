@@ -1,5 +1,6 @@
 import rs from "readline-sync";
 import fs from "fs";
+import cl from "colors";
 
 // Define the class to represent the game character
 class Character {
