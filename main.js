@@ -80,6 +80,13 @@ class RPGGame {
   }
   createNewcharacter() {
     const name = rs.question("Enter the name: ");
+    // check if the name is already used by another player
+    const alreadyInUse = this.players.find(player => player.name === name);
+    
+    if(alreadyInUse !== undefined){
+      rs.question(`\nThe name ${name} has been already used. Press Enter to go back...`);
+      return undefined;
+    }
     const job = rs.question("Enter the class: ");
     const skill1 = rs.question("Enter the first skill: ");
     const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
