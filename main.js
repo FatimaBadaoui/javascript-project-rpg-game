@@ -97,7 +97,11 @@ class RPGGame {
       player.listSkills();
       let indexSkill = Number(rs.question("Select the index of the skill: "));
       // if input is invalid skip the code below and start again
-      if(indexSkill < 1 || indexSkill > player.skills.length){
+      if (
+        indexSkill < 1 ||
+        indexSkill > player.skills.length ||
+        isNaN(indexSkill)
+      ) {
         console.log("\nINVALID INPUT! TRY AGAIN...\n");
         continue;
       }
@@ -113,7 +117,7 @@ class RPGGame {
     }
 
     if (player.hp > 0) {
-      player.exp += target.exp === 0? 5 : target.exp;
+      player.exp += target.exp === 0 ? 5 : target.exp;
       console.log(
         `\nCongratulations, ${player.name}. You are the Winner!\nYou receive 1 experience points.\n`
       );
@@ -136,7 +140,9 @@ class Dungeon {
   createFloor(monster) {
     const floor = [];
     for (let i = 0; i < 5; i++) {
-      floor.push(new Character(monster.name, monster.job, monster.skills, monster.hp));
+      floor.push(
+        new Character(monster.name, monster.job, monster.skills, monster.hp)
+      );
     }
     return floor;
   }
@@ -148,27 +154,31 @@ class Dungeon {
         `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
       );
       // show info about the monster
-        console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
+      console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
       // before any floor reset hp
       player.hp = 100;
       // fight monsters on each floor
       const floor = this.createFloor(monster);
       for (let i = 0; i < floor.length; i++) {
         console.log(
-          `\nThere are still ${floor.length - i} ${monster.name}s on this floor.`
+          `\nThere are still ${floor.length - i} ${
+            monster.name
+          }s on this floor.`
         );
         rPGGame.playerVsPlayer(player, floor[i]);
-        if(player.hp <= 0) break;
+        if (player.hp <= 0) break;
       }
-      // proceed to the next floor 
+      // proceed to the next floor
       this.currentFloor++;
     }
   }
   fightBoss(rPGGame, player) {
     // reset player hp
-    player.hp= 100;
+    player.hp = 100;
     console.clear();
-    console.log(`__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`);
+    console.log(
+      `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`
+    );
     rPGGame.playerVsPlayer(player, this.boss);
   }
 }
@@ -214,13 +224,15 @@ const slime = new Character(
   "Slime",
   "Monster",
   [{ skillName: "Bounce", damage: 5 }],
-  20, 1
+  20,
+  1
 );
 const goblin = new Character(
   "Goblin",
   "Monster",
   [{ skillName: "Toxic Slam", damage: 10 }],
-  40, 1
+  40,
+  1
 );
 const orc = new Character(
   "Orc",
@@ -229,7 +241,8 @@ const orc = new Character(
     { skillName: "Intimidation", damage: 12 },
     { skillName: "Brute Punch", damage: 15 },
   ],
-  60, 2
+  60,
+  2
 );
 const Lich = new Character(
   "Lich",
@@ -238,7 +251,8 @@ const Lich = new Character(
     { skillName: "Paralise", damage: 15 },
     { skillName: "Curse", damage: 20 },
   ],
-  90, 3
+  90,
+  3
 );
 const dragon = new Character(
   "Dragon",
@@ -248,7 +262,8 @@ const dragon = new Character(
     { skillName: "Fire Storm", damage: 20 },
     { skillName: "Rage", damage: 16 },
   ],
-  120, 5
+  120,
+  5
 );
 
 const dungeon = new Dungeon(
@@ -298,7 +313,7 @@ while (true) {
       console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
       dungeon.fightMonsters(rPGGame, player);
       // if player reaches the boss floor alive the fight the boss
-      if(player.hp > 0){
+      if (player.hp > 0) {
         dungeon.fightBoss(rPGGame, player);
       }
       // reset player HP
@@ -319,7 +334,19 @@ while (true) {
       let indexSkill = Number(
         rs.question("Select the index of the skill you want improve: ")
       );
+      if (
+        isNaN(indexSkill) ||
+        indexSkill >= player.skills.length ||
+        indexSkill < 1
+      ) {
+        rs.question("\nInvalid Input! Press ENTER to go back...");
+        continue;
+      }
       let points = Number(rs.question("How many points do you want to add? "));
+      if (isNaN(points) || points < 0) {
+        rs.question("\nInvalid Input! Press ENTER to go back...");
+        continue;
+      }
       player.addEXPPoints(indexSkill - 1, points);
       break;
     case "5":
