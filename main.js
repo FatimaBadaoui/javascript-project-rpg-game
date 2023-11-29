@@ -159,7 +159,13 @@ class RPGGame {
       console.log("\nYou have lost. Better next time!\n");
     }
   }
-  exploreDungeon() {}
+  exploreDungeon(player, dungeon) {
+    dungeon.fightMonsters(rPGGame, player);
+      // if player reaches the boss floor alive then fight the boss
+      if (player.hp > 0 && dungeon.currentFloor === dungeon.numberOfFloors) {
+        dungeon.fightBoss(rPGGame, player);
+      }
+  }
 }
 
 // define class to represent a Dungeon
@@ -191,6 +197,11 @@ class Dungeon {
       console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
       // before any floor reset hp
       player.hp = 100;
+      // continue exploring or exit the dungeon
+      const explore = rs.question("\nDo you want to explore this floor? (y | n): ");
+      if(!["y", "yes"].includes(explore.toLowerCase())){
+        return this.currentFloor;
+      }
       // fight monsters on each floor
       const floor = this.createFloor(monster);
       for (let i = 0; i < floor.length; i++) {
@@ -347,11 +358,7 @@ while (true) {
       // explore dungeon
       console.clear();
       console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
-      dungeon.fightMonsters(rPGGame, player);
-      // if player reaches the boss floor alive the fight the boss
-      if (player.hp > 0) {
-        dungeon.fightBoss(rPGGame, player);
-      }
+      rPGGame.exploreDungeon(player, dungeon)
       // reset player HP
       player.hp = 100;
       break;
