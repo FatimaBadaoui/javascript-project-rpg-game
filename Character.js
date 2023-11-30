@@ -27,9 +27,9 @@ export default class Character {
         let hPBar = "";
         for(let i = 0; i < 20; i++){
             if(i < Math.floor(this.hp / (initialHP / 20))){
-                hPBar += "+".green;
+                hPBar += "🟩";
             } else {
-                hPBar += "-".red;
+                hPBar += "🟥";
             }
         }
         return hPBar;

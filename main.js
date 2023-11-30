@@ -217,14 +217,14 @@ const Lich = new Character(
   3
 );
 const dragon = new Character(
-  "Dragon",
+  "Celestial Dragon",
   "Dragon",
   [
     { skillName: "Breath", damage: 18 },
     { skillName: "Fire Storm", damage: 20 },
     { skillName: "Rage", damage: 16 },
   ],
-  120,
+  150,
   5
 );
 
