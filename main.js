@@ -27,7 +27,7 @@ class Character {
   attack(target, indexSkill) {
     target.hp -= this.skills[indexSkill].damage;
     console.log(
-      `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`
+      `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`.gray
     );
   }
   listSkills() {
@@ -113,11 +113,11 @@ class RPGGame {
   logBackIn() {
     const name = rs.question("\nEnter the name of your character: ");
     const myCharacter = this.players.find(
-      (player) => player.name.toLowerCase() === name
+      (player) => player.name.toLowerCase() === name.toLowerCase()
     );
     if (myCharacter === undefined) {
       rs.question(
-        `\nThe character ${name} doesn't exist! press Enter to go back...`
+        `\nThe character ${name} doesn't exist! press Enter to go back...`.red
       );
     }
     return myCharacter;
@@ -145,7 +145,7 @@ class RPGGame {
         indexSkill > player.skills.length ||
         isNaN(indexSkill)
       ) {
-        console.log("\nINVALID INPUT! TRY AGAIN...\n");
+        console.log("\nINVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
       player.attack(target, indexSkill - 1);
@@ -162,10 +162,10 @@ class RPGGame {
     if (player.hp > 0) {
       player.exp += target.exp === 0 ? 5 : target.exp;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${target.exp} experience points.\n`
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${target.exp} experience points.\n`.green.bold.italic
       );
     } else {
-      console.log("\nYou have lost. Better next time!\n");
+      console.log("\nYou have lost. Better next time!\n".red.underline.bold);
     }
   }
   exploreDungeon(player, dungeon) {
@@ -196,7 +196,7 @@ class Dungeon {
       - Monsters: ${this.monsters.map((monster) => monster.name).join(", ")}
       - Monster Boss: ${this.boss.name}
     ____________________________________________
-    `;
+    `.green;
   }
   createFloor(monster) {
     const floor = [];
@@ -218,7 +218,7 @@ class Dungeon {
       const monster = this.monsters[this.currentFloor - 1];
       console.clear();
       console.log(
-        `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
+        `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`.yellow
       );
       // show info about the monster
       console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
@@ -237,10 +237,10 @@ class Dungeon {
         console.log(
           `\nThere are still ${floor.length - i} ${
             monster.name
-          }s on this floor.`
+          }s on this floor.`.cyan
         );
         rPGGame.playerVsPlayer(player, floor[i]);
-        console.log("\n__________________________\n");
+        console.log("\n__________________________\n".yellow);
         if (player.hp <= 0) return;
       }
       // proceed to the next floor
@@ -252,7 +252,7 @@ class Dungeon {
     player.hp = 100;
     console.clear();
     console.log(
-      `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`
+      `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`.yellow
     );
     rPGGame.playerVsPlayer(player, this.boss);
   }
@@ -427,7 +427,7 @@ while (true) {
     case "5":
       // exit application
       console.clear();
-      console.log("😔 Sad to see you leave... Let's play again soon!\n".america.underline);
+      console.log(" Sad to see you leave... Let's play again soon!\n".america.underline);
       process.exit();
     default:
       console.clear();
@@ -452,7 +452,7 @@ function chooseOrCreateCharacter() {
     case "1":
       // create new character
       console.clear();
-      console.log("__ Let's create a new character __\n".underline.cyan);
+      console.log("__ Let's create a new character __\n".cyan);
       player = rPGGame.createNewcharacter();
       console.log("\nCharacter successfully created!".bgGreen);
       break;
