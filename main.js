@@ -371,11 +371,12 @@ while (true) {
   switch (choice) {
     case "1":
       // randon player to fight
-      // by default length-1 because the last player is the player itself (in case the player created a new character)
+      // new array with all the other players with whom the user can fight
+      const otherPlayers = rPGGame.players.filter(otherPlayer => otherPlayer.name !== player.name);
       const randomIndex = Math.floor(
-        Math.random() * rPGGame.players.length - 1
+        Math.random() * otherPlayers.length
       );
-      const target = rPGGame.players[randomIndex];
+      const target = otherPlayers[randomIndex];
       // player vs player
       console.clear();
       console.log(`__ ${player.name} VS ${target.name} __\n`);
