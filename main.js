@@ -44,7 +44,8 @@ class RPGGame {
 
     if (alreadyInUse !== undefined) {
       rs.question(
-        `\nThe name ${name} has been already used. Press Enter to go back...`.red
+        `\nThe name ${name} has been already used. Press Enter to go back...`
+          .red
       );
       return undefined;
     }
@@ -119,7 +120,8 @@ class RPGGame {
       const addedPoints = target.exp === 0 ? 5 : target.exp;
       player.exp += addedPoints;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${addedPoints} experience points.\n`.green.bold.italic
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${addedPoints} experience points.\n`
+          .green.bold.italic
       );
     } else {
       console.log("\nYou have lost. Better next time!\n".red.underline.bold);
@@ -131,6 +133,12 @@ class RPGGame {
     dungeon.fightMonsters(rPGGame, player);
     // if player reaches the boss floor alive then fight the boss
     if (player.hp > 0 && dungeon.currentFloor === dungeon.numberOfFloors) {
+      // fight the boss or exit the dungeon
+      console.clear();
+      const explore = rs.question("\nDo you want to fight the Boss? (y | n): ");
+      if (!["y", "yes"].includes(explore.toLowerCase())) {
+        return;
+      }
       dungeon.fightBoss(rPGGame, player);
     }
   }
@@ -252,10 +260,10 @@ while (true) {
     case "1":
       // randon player to fight
       // new array with all the other players with whom the user can fight
-      const otherPlayers = rPGGame.players.filter(otherPlayer => otherPlayer.name !== player.name);
-      const randomIndex = Math.floor(
-        Math.random() * otherPlayers.length
+      const otherPlayers = rPGGame.players.filter(
+        (otherPlayer) => otherPlayer.name !== player.name
       );
+      const randomIndex = Math.floor(Math.random() * otherPlayers.length);
       const target = otherPlayers[randomIndex];
       // player vs player
       console.clear();
@@ -282,7 +290,10 @@ while (true) {
     case "4":
       // distribute points
       console.clear();
-      console.log(`__ You have ${player.exp} point that you can distribute __\n`.yellow.bold);
+      console.log(
+        `__ You have ${player.exp} point that you can distribute __\n`.yellow
+          .bold
+      );
       // list the skills to chose from then add the points to the damage of the chose skill
       player.listSkills();
       let indexSkill = Number(
@@ -306,7 +317,9 @@ while (true) {
     case "5":
       // exit application
       console.clear();
-      console.log(" Sad to see you leave... Let's play again soon!\n".america.underline);
+      console.log(
+        " Sad to see you leave... Let's play again soon!\n".america.underline
+      );
       process.exit();
     default:
       console.clear();
@@ -345,7 +358,9 @@ function chooseOrCreateCharacter() {
     case "3":
       //list all default character
       console.clear();
-      console.log("__ Choose from the List of the default characters: __\n".cyan);
+      console.log(
+        "__ Choose from the List of the default characters: __\n".cyan
+      );
       player = rPGGame.playAsGuest();
       break;
     default:
