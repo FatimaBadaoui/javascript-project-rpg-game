@@ -23,10 +23,22 @@ export default class Character {
           ---------------------------------------------
           `.blue;
     }
-    attack(target, indexSkill) {
+    showHP(initialHP){
+        let hPBar = "";
+        for(let i = 0; i < 20; i++){
+            if(i < Math.floor(this.hp / (initialHP / 20))){
+                hPBar += "+".green;
+            } else {
+                hPBar += "-".red;
+            }
+        }
+        return hPBar;
+    }
+    attack(target, indexSkill, initialHP) {
       target.hp -= this.skills[indexSkill].damage;
       console.log(
-        `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`.gray
+        `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`.gray,
+        target.showHP(initialHP)
       );
     }
     listSkills() {

@@ -90,6 +90,7 @@ class RPGGame {
   }
   playerVsPlayer(player, target) {
     let round = 1;
+    const initialHP = target.hp;
     while (player.hp > 0 && target.hp > 0) {
       console.log(`\n------- Round ${round} -------`);
       // player starts
@@ -105,13 +106,13 @@ class RPGGame {
         console.log("\nINVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
-      player.attack(target, indexSkill - 1);
+      player.attack(target, indexSkill - 1, initialHP);
       // if the target is K.O. exit the while without the target attack
       if (target.hp <= 0) {
         break;
       }
       // target turn
-      target.attack(player, Math.floor(Math.random() * target.skills.length));
+      target.attack(player, Math.floor(Math.random() * target.skills.length), initialHP);
 
       round++;
     }
