@@ -229,5 +229,16 @@
       { "skillName": "Double Pierce", "damage": 12 }
     ],
     "exp": 0
+  },
+  {
+    "name": "Lydia",
+    "job": "mage",
+    "hp": 100,
+    "skills": [
+      { "skillName": "fireball", "damage": 16 },
+      { "skillName": "wind arrow", "damage": 16 },
+      { "skillName": "firewall", "damage": 19 }
+    ],
+    "exp": 0
   }
 ]

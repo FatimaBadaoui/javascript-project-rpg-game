@@ -2,53 +2,9 @@ import rs from "readline-sync";
 import fs from "fs";
 import cl from "colors";
 
-// Define the class to represent the game character
-class Character {
-  constructor(name, job = "", skills = [], hp = 100, exp = 0) {
-    this.name = name;
-    this.job = job;
-    this.hp = hp;
-    this.skills = skills;
-    this.exp = exp;
-  }
-  openStatus() {
-    return `
-        --------------------------------------------
-        - Name: ${this.name}
-        - Class: ${this.job}
-        - HP: ${this.hp} points
-        - Skills: ${this.skills.map(
-          (skill) => `\n\t\t${skill.skillName} (${skill.damage} damage ponits)`
-        )}
-        - EXP: ${this.exp} points
-        ---------------------------------------------
-        `.blue;
-  }
-  attack(target, indexSkill) {
-    target.hp -= this.skills[indexSkill].damage;
-    console.log(
-      `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`.gray
-    );
-  }
-  listSkills() {
-    console.log(`
-    ${this.name}'s skills:
-    ${this.skills.map(
-      (skill, index) =>
-        `\n\t${index + 1}. ${skill.skillName} (${skill.damage} damage points)`.green
-    )}
-    `);
-  }
-  addEXPPoints(indexSkill, points) {
-    if (points > this.exp) {
-      console.log(`\nYou only have ${this.exp} points. You can't add more!`.bgRed);
-    } else {
-      this.skills[indexSkill].damage += points;
-      this.exp -= points;
-      console.log(`\n${points} points were added successfully!`.bgGreen);
-    }
-  }
-}
+//import classes
+import Character from "./Character.js";
+import Dungeon from "./Dungeon.js";
 
 // Define a class to represent the game
 class RPGGame {
@@ -59,7 +15,7 @@ class RPGGame {
   }
   readPlayersFromJson() {
     // check if the file exists
-    const filename = "players.json";
+    const filename = "./players.json";
     if (fs.existsSync(filename)) {
       let rawData = fs.readFileSync(filename);
       let playerObjects = JSON.parse(rawData);
@@ -71,7 +27,7 @@ class RPGGame {
     }
   }
   savePlayersToJson() {
-    fs.writeFileSync("players.json", JSON.stringify(this.players));
+    fs.writeFileSync("./players.json", JSON.stringify(this.players));
   }
 
   listCharacters() {
@@ -160,9 +116,10 @@ class RPGGame {
     }
 
     if (player.hp > 0) {
-      player.exp += target.exp === 0 ? 5 : target.exp;
+      const addedPoints = target.exp === 0 ? 5 : target.exp;
+      player.exp += addedPoints;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${target.exp} experience points.\n`.green.bold.italic
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${addedPoints} experience points.\n`.green.bold.italic
       );
     } else {
       console.log("\nYou have lost. Better next time!\n".red.underline.bold);
@@ -176,85 +133,6 @@ class RPGGame {
     if (player.hp > 0 && dungeon.currentFloor === dungeon.numberOfFloors) {
       dungeon.fightBoss(rPGGame, player);
     }
-  }
-}
-
-// define class to represent a Dungeon
-class Dungeon {
-  constructor(name, numberOfFloors, monsters, boss) {
-    this.name = name;
-    this.numberOfFloors = numberOfFloors;
-    this.monsters = monsters;
-    this.boss = boss;
-    this.currentFloor = 1;
-  }
-  displayInfo() {
-    return `
-    _______________ ${this.name} _______________
-
-      - Number of Floors: ${this.numberOfFloors}
-      - Monsters: ${this.monsters.map((monster) => monster.name).join(", ")}
-      - Monster Boss: ${this.boss.name}
-    ____________________________________________
-    `.green;
-  }
-  createFloor(monster) {
-    const floor = [];
-    for (let i = 0; i < 5; i++) {
-      floor.push(
-        new Character(
-          monster.name,
-          monster.job,
-          monster.skills,
-          monster.hp,
-          monster.exp
-        )
-      );
-    }
-    return floor;
-  }
-  fightMonsters(rPGGame, player) {
-    while (player.hp > 0 && this.currentFloor < this.numberOfFloors) {
-      const monster = this.monsters[this.currentFloor - 1];
-      console.clear();
-      console.log(
-        `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`.yellow
-      );
-      // show info about the monster
-      console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
-      // before any floor reset hp
-      player.hp = 100;
-      // continue exploring or exit the dungeon
-      const explore = rs.question(
-        "\nDo you want to explore this floor? (y | n): "
-      );
-      if (!["y", "yes"].includes(explore.toLowerCase())) {
-        return this.currentFloor;
-      }
-      // fight monsters on each floor
-      const floor = this.createFloor(monster);
-      for (let i = 0; i < floor.length; i++) {
-        console.log(
-          `\nThere are still ${floor.length - i} ${
-            monster.name
-          }s on this floor.`.cyan
-        );
-        rPGGame.playerVsPlayer(player, floor[i]);
-        console.log("\n__________________________\n".yellow);
-        if (player.hp <= 0) return;
-      }
-      // proceed to the next floor
-      this.currentFloor++;
-    }
-  }
-  fightBoss(rPGGame, player) {
-    // reset player hp
-    player.hp = 100;
-    console.clear();
-    console.log(
-      `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`.yellow
-    );
-    rPGGame.playerVsPlayer(player, this.boss);
   }
 }
 
@@ -442,7 +320,7 @@ while (true) {
 function chooseOrCreateCharacter() {
   console.log("\nTo start playing create or choose your character\n");
   console.log("1. Create a new character".blue);
-  console.log("2. Play with your already created character".blue);
+  console.log("2. Log back into the game".blue);
   console.log("3. Choose a default character and Play as a guest".blue);
 
   const choice = rs.question("\nEnter your choice: ");
