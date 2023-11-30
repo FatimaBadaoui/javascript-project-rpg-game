@@ -1,5 +1,6 @@
 import rs from "readline-sync";
 import fs from "fs";
+import cl from "colors";
 
 // Define the class to represent the game character
 class Character {
@@ -21,12 +22,12 @@ class Character {
         )}
         - EXP: ${this.exp} points
         ---------------------------------------------
-        `;
+        `.blue;
   }
   attack(target, indexSkill) {
     target.hp -= this.skills[indexSkill].damage;
     console.log(
-      `\n\u{2694} ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`
+      `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name} hp is now ${target.hp}`.gray
     );
   }
   listSkills() {
@@ -34,17 +35,17 @@ class Character {
     ${this.name}'s skills:
     ${this.skills.map(
       (skill, index) =>
-        `\n\t${index + 1}. ${skill.skillName} (${skill.damage} damage points)`
+        `\n\t${index + 1}. ${skill.skillName} (${skill.damage} damage points)`.green
     )}
     `);
   }
   addEXPPoints(indexSkill, points) {
     if (points > this.exp) {
-      console.log(`\nYou only have ${this.exp} points. You can't add more!`);
+      console.log(`\nYou only have ${this.exp} points. You can't add more!`.bgRed);
     } else {
       this.skills[indexSkill].damage += points;
       this.exp -= points;
-      console.log(`\n${points} points were added successfully!`);
+      console.log(`\n${points} points were added successfully!`.bgGreen);
     }
   }
 }
@@ -82,12 +83,12 @@ class RPGGame {
     const name = rs.question("Enter the name: ");
     // check if the name is already used by another player
     const alreadyInUse = this.players.find(
-      (player) => player.name.toLowerCase() === name
+      (player) => player.name.toLowerCase() === name.toLowerCase()
     );
 
     if (alreadyInUse !== undefined) {
       rs.question(
-        `\nThe name ${name} has been already used. Press Enter to go back...`
+        `\nThe name ${name} has been already used. Press Enter to go back...`.red
       );
       return undefined;
     }
@@ -112,11 +113,11 @@ class RPGGame {
   logBackIn() {
     const name = rs.question("\nEnter the name of your character: ");
     const myCharacter = this.players.find(
-      (player) => player.name.toLowerCase() === name
+      (player) => player.name.toLowerCase() === name.toLowerCase()
     );
     if (myCharacter === undefined) {
       rs.question(
-        `\nThe character ${name} doesn't exist! press Enter to go back...`
+        `\nThe character ${name} doesn't exist! press Enter to go back...`.red
       );
     }
     return myCharacter;
@@ -144,7 +145,7 @@ class RPGGame {
         indexSkill > player.skills.length ||
         isNaN(indexSkill)
       ) {
-        console.log("\nINVALID INPUT! TRY AGAIN...\n");
+        console.log("\nINVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
       player.attack(target, indexSkill - 1);
@@ -161,10 +162,10 @@ class RPGGame {
     if (player.hp > 0) {
       player.exp += target.exp === 0 ? 5 : target.exp;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${target.exp} experience points.\n`
+        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${target.exp} experience points.\n`.green.bold.italic
       );
     } else {
-      console.log("\nYou have lost. Better next time!\n");
+      console.log("\nYou have lost. Better next time!\n".red.underline.bold);
     }
   }
   exploreDungeon(player, dungeon) {
@@ -195,7 +196,7 @@ class Dungeon {
       - Monsters: ${this.monsters.map((monster) => monster.name).join(", ")}
       - Monster Boss: ${this.boss.name}
     ____________________________________________
-    `;
+    `.green;
   }
   createFloor(monster) {
     const floor = [];
@@ -217,7 +218,7 @@ class Dungeon {
       const monster = this.monsters[this.currentFloor - 1];
       console.clear();
       console.log(
-        `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`
+        `\n${player.name} has entered the floor number ${this.currentFloor}. This floor is inhabited by ${monster.name}s.`.yellow
       );
       // show info about the monster
       console.log(`\n${monster.name}'s info:\n${monster.openStatus()}`);
@@ -236,9 +237,10 @@ class Dungeon {
         console.log(
           `\nThere are still ${floor.length - i} ${
             monster.name
-          }s on this floor.`
+          }s on this floor.`.cyan
         );
         rPGGame.playerVsPlayer(player, floor[i]);
+        console.log("\n__________________________\n".yellow);
         if (player.hp <= 0) return;
       }
       // proceed to the next floor
@@ -250,7 +252,7 @@ class Dungeon {
     player.hp = 100;
     console.clear();
     console.log(
-      `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`
+      `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`.yellow
     );
     rPGGame.playerVsPlayer(player, this.boss);
   }
@@ -340,7 +342,7 @@ const dragon = new Character(
 );
 
 const dungeon = new Dungeon(
-  "Dragon Lair",
+  "Dragon's Lair",
   5,
   [slime, goblin, orc, Lich],
   dragon
@@ -352,19 +354,19 @@ const dungeon = new Dungeon(
 let player;
 while (!player) {
   console.clear();
-  console.log(`__ Welcome to ${rPGGame.name} Game __`);
+  console.log(`__ WELCOME TO < ${rPGGame.name} > GAME __`.trap.america);
   player = chooseOrCreateCharacter();
 }
 
 // start the Game
 while (true) {
   console.clear();
-  console.log(`__ Weolcome player ${player.name} __`);
-  console.log("\n1. Player vs player");
-  console.log("2. Explore a dungeon");
-  console.log("3. Open status");
-  console.log("4. Distribute experience points");
-  console.log("5. Exit");
+  console.log(`__ Weolcome player ${player.name} __`.america.bold);
+  console.log("\n1. Player vs player".blue);
+  console.log("2. Explore a dungeon".blue);
+  console.log("3. Open status".blue);
+  console.log("4. Distribute experience points".blue);
+  console.log("5. Exit".blue);
 
   const choice = rs.question("\nEnter your choice: ");
 
@@ -379,7 +381,7 @@ while (true) {
       const target = otherPlayers[randomIndex];
       // player vs player
       console.clear();
-      console.log(`__ ${player.name} VS ${target.name} __\n`);
+      console.log(`__ ${player.name} VS ${target.name} __\n`.yellow.bold);
       rPGGame.playerVsPlayer(player, target);
       // reset hp
       player.hp = 100;
@@ -388,7 +390,7 @@ while (true) {
     case "2":
       // explore dungeon
       console.clear();
-      console.log(`__ Welcome to the ${dungeon.name} brave adventurer __`);
+      console.log(`__ Welcome to the ${dungeon.name} dungeon __`.yellow.bold);
       rPGGame.exploreDungeon(player, dungeon);
       // reset player HP
       player.hp = 100;
@@ -396,13 +398,13 @@ while (true) {
     case "3":
       // open status
       console.clear();
-      console.log("__ Player Status __");
+      console.log("__ Player's Status __".yellow.bold);
       console.log(player.openStatus());
       break;
     case "4":
       // distribute points
       console.clear();
-      console.log(`You have ${player.exp} point that you can distribute.\n`);
+      console.log(`__ You have ${player.exp} point that you can distribute __\n`.yellow.bold);
       // list the skills to chose from then add the points to the damage of the chose skill
       player.listSkills();
       let indexSkill = Number(
@@ -413,12 +415,12 @@ while (true) {
         indexSkill >= player.skills.length ||
         indexSkill < 1
       ) {
-        rs.question("\nInvalid Input! Press ENTER to go back...");
+        rs.question("\nInvalid Input! Press ENTER to go back...".bgRed);
         continue;
       }
       let points = Number(rs.question("How many points do you want to add? "));
       if (isNaN(points) || points < 0) {
-        rs.question("\nInvalid Input! Press ENTER to go back...");
+        rs.question("\nInvalid Input! Press ENTER to go back...".bgRed);
         continue;
       }
       player.addEXPPoints(indexSkill - 1, points);
@@ -426,10 +428,11 @@ while (true) {
     case "5":
       // exit application
       console.clear();
-      console.log("Sad to see you leave... Let's play again soon!");
+      console.log(" Sad to see you leave... Let's play again soon!\n".america.underline);
       process.exit();
     default:
-      console.log("Invalid Input!");
+      console.clear();
+      console.log("Invalid Input!".bgRed);
   }
 
   rs.question("\nPress Enter to continue...");
@@ -438,9 +441,9 @@ while (true) {
 // functions
 function chooseOrCreateCharacter() {
   console.log("\nTo start playing create or choose your character\n");
-  console.log("1. Create a new character");
-  console.log("2. Play with your already created character");
-  console.log("3. Choose a default character and Play as a guest");
+  console.log("1. Create a new character".blue);
+  console.log("2. Play with your already created character".blue);
+  console.log("3. Choose a default character and Play as a guest".blue);
 
   const choice = rs.question("\nEnter your choice: ");
 
@@ -450,27 +453,27 @@ function chooseOrCreateCharacter() {
     case "1":
       // create new character
       console.clear();
-      console.log("Let's create a new character!\n");
+      console.log("__ Let's create a new character __\n".cyan);
       player = rPGGame.createNewcharacter();
-      console.log("\nCharacter successfully created!");
+      console.log("\nCharacter successfully created!".bgGreen);
       break;
 
     case "2":
       // Log in with your character
       console.clear();
-      console.log("__ Log Back In __");
+      console.log("__ Log Back In __".cyan);
       player = rPGGame.logBackIn();
       break;
     case "3":
       //list all default character
       console.clear();
-      console.log("Choose from the List of the default characters:\n");
+      console.log("__ Choose from the List of the default characters: __\n".cyan);
       player = rPGGame.playAsGuest();
       break;
     default:
       console.clear();
-      console.log("\nInvalid Input!");
-      rs.question("Press Enter to continue...");
+      console.log("\nInvalid Input!".bgRed);
+      rs.question("\nPress Enter to continue...");
   }
   return player;
 }
