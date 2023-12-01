@@ -86,6 +86,14 @@ class RPGGame {
       rs.question("Enter the index of the chosen character: ")
     );
 
+    // Error message if input is invalid
+    if(isNaN(indexCharacter) || indexCharacter < 1 || indexCharacter > this.characters.length){
+      console.clear();
+      console.log(`Invalid Input!`.bgRed);
+      rs.question("\nPress Enter to try again...");
+      return;
+    }
+
     return this.characters[indexCharacter - 1];
   }
   playerVsPlayer(player, target) {
