@@ -6,6 +6,9 @@ import cl from "colors";
 import Character from "./Character.js";
 import Dungeon from "./Dungeon.js";
 
+// import variables
+import { fantasyClasses } from "./array-of-fantasy-classes.js";
+
 // Define a class to represent the game
 class RPGGame {
   constructor(name, characters = []) {
@@ -49,12 +52,24 @@ class RPGGame {
       );
       return undefined;
     }
-    const job = rs.question("Enter the class: ");
-    const skill1 = rs.question("Enter the first skill: ");
+    // choice for the character Class
+    const classes = fantasyClasses.map(
+      (fantasyClass) => fantasyClass.className
+    );
+    const classIndex = rs.keyInSelect(classes, "Which class do you wanna be?");
+    // if CANCEl return
+   /*  if (classIndex == 0) {
+      return;
+    } */
+    const job = classes[classIndex];
+
+    // Choice for skills
+    const classSkills= fantasyClasses.find(classObj => classObj.className === job).attackingSkills;
+    const skill1 = rs.keyInSelect(classSkills, "Enter the index of the first skill you want: ");
     const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-    const skill2 = rs.question("Enter the second skill: ");
+    const skill2 = rs.keyInSelect(classSkills, "Enter the index of the second skill you want: ");
     const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-    const skill3 = rs.question("Enter the third skill: ");
+    const skill3 = rs.keyInSelect(classSkills, "Enter the index of the third skill you want: ");
     const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
 
     const player = new Character(name, job, [
@@ -87,7 +102,11 @@ class RPGGame {
     );
 
     // Error message if input is invalid
-    if(isNaN(indexCharacter) || indexCharacter < 1 || indexCharacter > this.characters.length){
+    if (
+      isNaN(indexCharacter) ||
+      indexCharacter < 1 ||
+      indexCharacter > this.characters.length
+    ) {
       console.clear();
       console.log(`Invalid Input!`.bgRed);
       rs.question("\nPress Enter to try again...");
@@ -120,7 +139,11 @@ class RPGGame {
         break;
       }
       // target turn
-      target.attack(player, Math.floor(Math.random() * target.skills.length), initialHP);
+      target.attack(
+        player,
+        Math.floor(Math.random() * target.skills.length),
+        initialHP
+      );
 
       round++;
     }
