@@ -58,25 +58,55 @@ class RPGGame {
     );
     const classIndex = rs.keyInSelect(classes, "Which class do you wanna be?");
     // if CANCEl return
-   /*  if (classIndex == 0) {
+    if (classIndex === -1) {
       return;
-    } */
+    }
     const job = classes[classIndex];
 
     // Choice for skills
-    const classSkills= fantasyClasses.find(classObj => classObj.className === job).attackingSkills;
-    const skill1 = rs.keyInSelect(classSkills, "Enter the index of the first skill you want: ");
+    const classSkills = fantasyClasses.find(
+      (classObj) => classObj.className === job
+    ).attackingSkills;
+    const indexSkill1 = rs.keyInSelect(
+      classSkills,
+      "Enter the index of the first skill you want: "
+    );
+    // if CANCEL return
+    if (indexSkill1 === -1) {
+      return;
+    }
+    const skill1 = classSkills[indexSkill1];
     const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-    const skill2 = rs.keyInSelect(classSkills, "Enter the index of the second skill you want: ");
+    const indexSkill2 = rs.keyInSelect(
+      classSkills,
+      "Enter the index of the second skill you want: "
+    );
+    // if CANCEL return
+    if (indexSkill2 === -1) {
+      return;
+    }
+    const skill2 = classSkills[indexSkill2];
     const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-    const skill3 = rs.keyInSelect(classSkills, "Enter the index of the third skill you want: ");
+    const indexSkill3 = rs.keyInSelect(
+      classSkills,
+      "Enter the index of the third skill you want: "
+    );
+    // if CANCEL return
+    if (indexSkill3 === -1) {
+      return;
+    }
+    const skill3 = classSkills[indexSkill3];
     const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
 
-    const player = new Character(name, job, [
-      { skillName: skill1, damage: damage1 },
-      { skillName: skill2, damage: damage2 },
-      { skillName: skill3, damage: damage3 },
-    ]);
+    const player = new Character(
+      name,
+      job,
+      [
+        { skillName: skill1, damage: damage1 },
+        { skillName: skill2, damage: damage2 },
+        { skillName: skill3, damage: damage3 },
+      ]
+    );
 
     this.players.push(player);
     this.savePlayersToJson();
