@@ -63,10 +63,12 @@ class RPGGame {
     }
     const job = classes[classIndex];
 
-    // Choice for skills
+    // array of the skills of the chosen class
     const classSkills = fantasyClasses.find(
       (classObj) => classObj.className === job
     ).attackingSkills;
+
+    // First Skill
     const indexSkill1 = rs.keyInSelect(
       classSkills,
       "Enter the index of the first skill you want: "
@@ -77,6 +79,9 @@ class RPGGame {
     }
     const skill1 = classSkills[indexSkill1];
     const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
+
+    // Second Skill
+    classSkills.splice(indexSkill1, 1);
     const indexSkill2 = rs.keyInSelect(
       classSkills,
       "Enter the index of the second skill you want: "
@@ -87,6 +92,9 @@ class RPGGame {
     }
     const skill2 = classSkills[indexSkill2];
     const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
+
+    // Third Skill
+    classSkills.splice(indexSkill2, 1);
     const indexSkill3 = rs.keyInSelect(
       classSkills,
       "Enter the index of the third skill you want: "
@@ -98,16 +106,14 @@ class RPGGame {
     const skill3 = classSkills[indexSkill3];
     const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
 
-    const player = new Character(
-      name,
-      job,
-      [
-        { skillName: skill1, damage: damage1 },
-        { skillName: skill2, damage: damage2 },
-        { skillName: skill3, damage: damage3 },
-      ]
-    );
+    // create a new instance of character using the inputs given
+    const player = new Character(name, job, [
+      { skillName: skill1, damage: damage1 },
+      { skillName: skill2, damage: damage2 },
+      { skillName: skill3, damage: damage3 },
+    ]);
 
+    // add the new character to the array players and update the json file
     this.players.push(player);
     this.savePlayersToJson();
     return player;
