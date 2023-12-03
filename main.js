@@ -138,11 +138,7 @@ class RPGGame {
     );
 
     // Error message if input is invalid
-    if (
-      isNaN(indexCharacter) ||
-      indexCharacter < 1 ||
-      indexCharacter > this.characters.length
-    ) {
+    if (this.characters[indexCharacter - 1] === undefined) {
       console.clear();
       console.log(`Invalid Input!`.bgRed);
       rs.question("\nPress Enter to try again...");
@@ -161,11 +157,7 @@ class RPGGame {
       player.listSkills();
       let indexSkill = Number(rs.question("Select the index of the skill: "));
       // if input is invalid skip the code below and start again
-      if (
-        indexSkill < 1 ||
-        indexSkill > player.skills.length ||
-        isNaN(indexSkill)
-      ) {
+      if (player.skills[indexSkill - 1] === undefined) {
         console.log("\nINVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
@@ -367,11 +359,7 @@ while (true) {
       let indexSkill = Number(
         rs.question("Select the index of the skill you want improve: ")
       );
-      if (
-        isNaN(indexSkill) ||
-        indexSkill >= player.skills.length ||
-        indexSkill < 1
-      ) {
+      if (player.skills[indexSkill - 1] === undefined) {
         rs.question("\nInvalid Input! Press ENTER to go back...".bgRed);
         continue;
       }
