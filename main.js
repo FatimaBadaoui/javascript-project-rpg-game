@@ -95,11 +95,15 @@ class RPGGame {
     }
 
     // create a new instance of character using the inputs given
-    const player = new Character(name, job, [
-      { skillName: skillsArray[0][0], damage: skillsArray[0][1] },
-      { skillName: skillsArray[1][0], damage: skillsArray[1][1] },
-      { skillName: skillsArray[2][0], damage: skillsArray[2][1] },
-    ]);
+    const player = new Character(
+      name[0].toUpperCase() + name.slice(1).toLowerCase(),
+      job,
+      [
+        { skillName: skillsArray[0][0], damage: skillsArray[0][1] },
+        { skillName: skillsArray[1][0], damage: skillsArray[1][1] },
+        { skillName: skillsArray[2][0], damage: skillsArray[2][1] },
+      ]
+    );
 
     // add the new character to the array players and update the json file
     this.players.push(player);

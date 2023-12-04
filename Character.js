@@ -4,7 +4,7 @@ import cl from "colors";
 // Define the class to represent the game character
 export default class Character {
   constructor(name, job = "", skills = [], hp = 100, xp = 0) {
-    this.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
+    this.name = name;
     this.job = job;
     this.hp = hp;
     this.skills = skills;
