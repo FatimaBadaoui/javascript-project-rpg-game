@@ -37,6 +37,7 @@ export default class Dungeon {
     return floor;
   }
   fightMonsters(rPGGame, player) {
+    const initialHPPlayer = player.hp;
     while (player.hp > 0 && this.currentFloor < this.numberOfFloors) {
       const monster = this.monsters[this.currentFloor - 1];
       console.clear();
@@ -63,7 +64,7 @@ export default class Dungeon {
             monster.name
           }s on this floor.`.cyan
         );
-        rPGGame.playerVsPlayer(player, floor[i]);
+        rPGGame.playerVsPlayer(player, floor[i], initialHPPlayer);
         console.log("\n_____________________________________________________________\n".yellow.bold);
         if (player.hp <= 0) return;
       }
@@ -79,6 +80,6 @@ export default class Dungeon {
       `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`
         .yellow
     );
-    rPGGame.playerVsPlayer(player, this.boss);
+    rPGGame.playerVsPlayer(player, this.boss, player.hp);
   }
 }

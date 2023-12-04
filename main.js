@@ -23,7 +23,7 @@ class RPGGame {
       let rawData = fs.readFileSync(filename);
       let playerObjects = JSON.parse(rawData);
       return playerObjects.map(
-        (player) => new Character(player.name, player.job, player.skills)
+        (player) => new Character(player.name, player.job, player.skills, player.hp, player.xp)
       );
     } else {
       return [];
@@ -115,7 +115,6 @@ class RPGGame {
 
     // add the new character to the array players and update the json file
     this.players.push(player);
-    this.savePlayersToJson();
     return player;
   }
   logBackIn() {
@@ -147,9 +146,11 @@ class RPGGame {
 
     return this.characters[indexCharacter - 1];
   }
-  playerVsPlayer(player, target) {
+  playerVsPlayer(player, target, initialHPPlayer) {
     let round = 1;
-    const initialHP = target.hp;
+    // the initial hp of both player and target are used to create the hp bar with green and red squares
+    const initialHPTarget = target.hp;
+    // fight until one of the players has no more hp
     while (player.hp > 0 && target.hp > 0) {
       console.log(`\n------- Round ${round} -------`);
       // player starts
@@ -158,10 +159,10 @@ class RPGGame {
       let indexSkill = Number(rs.question("Select the index of the skill: "));
       // if input is invalid skip the code below and start again
       if (player.skills[indexSkill - 1] === undefined) {
-        console.log("\nINVALID INPUT! TRY AGAIN...".bgRed);
+        console.log("\n❌", "INVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
-      player.attack(target, indexSkill - 1, initialHP);
+      player.attack(target, indexSkill - 1, initialHPTarget);
       // if the target is K.O. exit the while without the target attack
       if (target.hp <= 0) {
         break;
@@ -170,7 +171,7 @@ class RPGGame {
       target.attack(
         player,
         Math.floor(Math.random() * target.skills.length),
-        initialHP
+        initialHPPlayer
       );
 
       round++;
@@ -180,11 +181,11 @@ class RPGGame {
       const addedPoints = target.xp === 0 ? 5 : target.xp;
       player.xp += addedPoints;
       console.log(
-        `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${addedPoints} experience points.\n`
+        `\n🎉 Congratulations, ${player.name}. You are the Winner!\nYou receive ${addedPoints} experience points.\n`
           .green.bold.italic
       );
     } else {
-      console.log("\nYou have lost. Better next time!\n".red.underline.bold);
+      console.log("\n💀 You have lost. Better next time!\n".red.underline.bold);
     }
   }
   exploreDungeon(player, dungeon) {
@@ -242,21 +243,21 @@ const rPGGame = new RPGGame("Swords and Magic", [
 
 // Create Monsters characters and add the to the dungeon
 const slime = new Character(
-  "Slime",
+  "👾 Slime",
   "Monster",
   [{ skillName: "Bounce", damage: 5 }],
   20,
   1
 );
 const goblin = new Character(
-  "Goblin",
+  "👺 Goblin",
   "Monster",
   [{ skillName: "Toxic Slam", damage: 10 }],
   40,
   1
 );
 const orc = new Character(
-  "Orc",
+  "👹 Orc",
   "Monster",
   [
     { skillName: "Intimidation", damage: 12 },
@@ -266,7 +267,7 @@ const orc = new Character(
   2
 );
 const Lich = new Character(
-  "Lich",
+  "💀 Lich",
   "Undead",
   [
     { skillName: "Paralise", damage: 15 },
@@ -276,14 +277,14 @@ const Lich = new Character(
   3
 );
 const dragon = new Character(
-  "Celestial Dragon",
+  "Celestial Dragon 🐉",
   "Dragon",
   [
-    { skillName: "Breath", damage: 18 },
-    { skillName: "Fire Storm", damage: 20 },
-    { skillName: "Rage", damage: 16 },
+    { skillName: "Breath", damage: 20 },
+    { skillName: "Fire Storm", damage: 25 },
+    { skillName: "Rage", damage: 18 },
   ],
-  150,
+  200,
   5
 );
 
@@ -330,9 +331,9 @@ while (true) {
       // player vs player
       console.clear();
       console.log(`__ ${player.name} VS ${target.name} __\n`.yellow.bold);
-      rPGGame.playerVsPlayer(player, target);
+      rPGGame.playerVsPlayer(player, target, player.hp);
       // reset hp and level up (every 5 xp is 1 hp)
-      player.hp = initialHP + player.xp / 5;
+      player.hp = initialHP + Math.round(player.xp / 5);
       target.hp = 100;
       break;
     case "2":
@@ -342,7 +343,7 @@ while (true) {
       console.log(`__ Welcome to the ${dungeon.name} dungeon __`.yellow.bold);
       rPGGame.exploreDungeon(player, dungeon);
       // reset player HP and level up - every 5 xp is 1 hp
-      player.hp = hpBeforeDungeon + player.xp / 5;
+      player.hp = hpBeforeDungeon + Math.round(player.xp / 5);
       break;
     case "3":
       // open status
@@ -363,12 +364,12 @@ while (true) {
         rs.question("Select the index of the skill you want improve: ")
       );
       if (player.skills[indexSkill - 1] === undefined) {
-        rs.question("\nInvalid Input! Press ENTER to go back...".bgRed);
+        rs.question("\n❌ " + "Invalid Input! Press ENTER to go back...".bgRed);
         continue;
       }
       let points = Number(rs.question("How many points do you want to add? "));
       if (isNaN(points) || points < 0) {
-        rs.question("\nInvalid Input! Press ENTER to go back...".bgRed);
+        rs.question("\n❌ " + "Invalid Input! Press ENTER to go back...".bgRed);
         continue;
       }
       player.addEXPPoints(indexSkill - 1, points);
@@ -383,7 +384,7 @@ while (true) {
       process.exit();
     default:
       console.clear();
-      console.log("Invalid Input!".bgRed);
+      console.log("❌", "Invalid Input!".bgRed);
   }
 
   rs.question("\nPress Enter to continue...");
@@ -425,7 +426,7 @@ function chooseOrCreateCharacter() {
       break;
     default:
       console.clear();
-      console.log("\nInvalid Input!".bgRed);
+      console.log("\n❌","Invalid Input!".bgRed);
       rs.question("\nPress Enter to continue...");
   }
   return player;

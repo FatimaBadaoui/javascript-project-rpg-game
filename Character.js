@@ -27,7 +27,7 @@ export default class Character {
   showHP(initialHP) {
     let hPBar = "";
     for (let i = 0; i < 20; i++) {
-      if (i < Math.floor(this.hp / (initialHP / 20))) {
+      if (i < Math.floor(this.hp / Math.round(initialHP / 20))) {
         hPBar += "🟩";
       } else {
         hPBar += "🟥";
@@ -38,7 +38,7 @@ export default class Character {
   attack(target, indexSkill, initialHP) {
     target.hp -= this.skills[indexSkill].damage;
     console.log(
-      `\n⚔️ ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name}'s hp:`
+      `\n💥 ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name}'s hp (${target.hp}):`
         .gray,
       target.showHP(initialHP)
     );
@@ -56,7 +56,7 @@ export default class Character {
   addEXPPoints(indexSkill, points) {
     if (points > this.xp) {
       console.log(
-        `\nYou only have ${this.xp} points. You can't add more!`.bgRed
+        "\n❌", `You only have ${this.xp} points. You can't add more!`.bgRed
       );
     } else {
       this.skills[indexSkill].damage += points;
