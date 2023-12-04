@@ -189,6 +189,7 @@ class RPGGame {
     }
   }
   exploreDungeon(player, dungeon) {
+    const initialHP = player.hp;
     console.log("\nDungeon's Info:\n", dungeon.displayInfo());
     rs.question("\nPress Enter to explore the dungeon...");
     dungeon.fightMonsters(rPGGame, player);
@@ -200,6 +201,8 @@ class RPGGame {
       if (!["y", "yes"].includes(explore.toLowerCase())) {
         return;
       }
+      // reset player hp before boss floor
+      player.hp = initialHP;
       dungeon.fightBoss(rPGGame, player);
     }
   }

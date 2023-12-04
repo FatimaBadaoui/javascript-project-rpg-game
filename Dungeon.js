@@ -73,8 +73,8 @@ export default class Dungeon {
     }
   }
   fightBoss(rPGGame, player) {
-    // reset player hp
-    player.hp = 100;
+    // reset boss hp
+    this.boss.hp = 200;
     console.clear();
     console.log(
       `__ ${player.name} has entered the Boss floor. The boss is ${this.boss.name} __`
