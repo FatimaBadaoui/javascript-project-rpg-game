@@ -3,12 +3,12 @@ import cl from "colors";
 
 // Define the class to represent the game character
 export default class Character {
-  constructor(name, job = "", skills = [], hp = 100, exp = 0) {
+  constructor(name, job = "", skills = [], hp = 100, xp = 0) {
     this.name = name[0].toUpperCase() + name.slice(1).toLowerCase();
     this.job = job;
     this.hp = hp;
     this.skills = skills;
-    this.exp = exp;
+    this.xp = xp;
   }
   openStatus() {
     return `
@@ -20,7 +20,7 @@ export default class Character {
             (skill) =>
               `\n\t\t${skill.skillName} (${skill.damage} damage ponits)`
           )}
-          - EXP: ${this.exp} points
+          - XP: ${this.xp} points
           ---------------------------------------------
           `.blue;
   }
@@ -54,13 +54,13 @@ export default class Character {
       `);
   }
   addEXPPoints(indexSkill, points) {
-    if (points > this.exp) {
+    if (points > this.xp) {
       console.log(
-        `\nYou only have ${this.exp} points. You can't add more!`.bgRed
+        `\nYou only have ${this.xp} points. You can't add more!`.bgRed
       );
     } else {
       this.skills[indexSkill].damage += points;
-      this.exp -= points;
+      this.xp -= points;
       console.log(`\n${points} points were added successfully!`.bgGreen);
     }
   }

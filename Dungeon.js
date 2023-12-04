@@ -30,7 +30,7 @@ export default class Dungeon {
           monster.job,
           monster.skills,
           monster.hp,
-          monster.exp
+          monster.xp
         )
       );
     }
@@ -64,7 +64,7 @@ export default class Dungeon {
           }s on this floor.`.cyan
         );
         rPGGame.playerVsPlayer(player, floor[i]);
-        console.log("\n__________________________\n".yellow);
+        console.log("\n_____________________________________________________________\n".yellow.bold);
         if (player.hp <= 0) return;
       }
       // proceed to the next floor

@@ -177,8 +177,8 @@ class RPGGame {
     }
 
     if (player.hp > 0) {
-      const addedPoints = target.exp === 0 ? 5 : target.exp;
-      player.exp += addedPoints;
+      const addedPoints = target.xp === 0 ? 5 : target.xp;
+      player.xp += addedPoints;
       console.log(
         `\nCongratulations, ${player.name}. You are the Winner!\nYou receive ${addedPoints} experience points.\n`
           .green.bold.italic
@@ -319,6 +319,8 @@ while (true) {
   switch (choice) {
     case "1":
       // randon player to fight
+      //before the fight save the player hp in a variable
+      const initialHP = player.hp;
       // new array with all the other players with whom the user can fight
       const otherPlayers = rPGGame.players.filter(
         (otherPlayer) => otherPlayer.name !== player.name
@@ -329,17 +331,18 @@ while (true) {
       console.clear();
       console.log(`__ ${player.name} VS ${target.name} __\n`.yellow.bold);
       rPGGame.playerVsPlayer(player, target);
-      // reset hp
-      player.hp = 100;
+      // reset hp and level up (every 5 xp is 1 hp)
+      player.hp = initialHP + player.xp / 5;
       target.hp = 100;
       break;
     case "2":
       // explore dungeon
+      const hpBeforeDungeon = player.hp;
       console.clear();
       console.log(`__ Welcome to the ${dungeon.name} dungeon __`.yellow.bold);
       rPGGame.exploreDungeon(player, dungeon);
-      // reset player HP
-      player.hp = 100;
+      // reset player HP and level up - every 5 xp is 1 hp
+      player.hp = hpBeforeDungeon + player.xp / 5;
       break;
     case "3":
       // open status
@@ -348,10 +351,10 @@ while (true) {
       console.log(player.openStatus());
       break;
     case "4":
-      // distribute points
+      // distribute experience points
       console.clear();
       console.log(
-        `__ You have ${player.exp} point that you can distribute __\n`.yellow
+        `__ You have ${player.xp} point that you can distribute __\n`.yellow
           .bold
       );
       // list the skills to chose from then add the points to the damage of the chose skill
@@ -371,7 +374,8 @@ while (true) {
       player.addEXPPoints(indexSkill - 1, points);
       break;
     case "5":
-      // exit application
+      // save the player data and exit application
+      rPGGame.savePlayersToJson();
       console.clear();
       console.log(
         " Sad to see you leave... Let's play again soon!\n".america.underline
