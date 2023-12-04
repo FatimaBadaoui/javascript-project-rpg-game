@@ -23,7 +23,14 @@ class RPGGame {
       let rawData = fs.readFileSync(filename);
       let playerObjects = JSON.parse(rawData);
       return playerObjects.map(
-        (player) => new Character(player.name, player.job, player.skills, player.hp, player.xp)
+        (player) =>
+          new Character(
+            player.name,
+            player.job,
+            player.skills,
+            player.hp,
+            player.xp
+          )
       );
     } else {
       return [];
@@ -68,49 +75,30 @@ class RPGGame {
       (classObj) => classObj.className === job
     ).attackingSkills;
 
-    // First Skill
-    const indexSkill1 = rs.keyInSelect(
-      classSkills,
-      "Enter the index of the first skill you want: "
-    );
-    // if CANCEL return
-    if (indexSkill1 === -1) {
-      return;
+    // add 3 skills
+    const skillsArray = [];
+    for (let i = 1; i <= 3; i++) {
+      const indexSkill = rs.keyInSelect(
+        classSkills,
+        `Enter the index of the ${i} skill you want: `
+      );
+      // if CANCEL return
+      if (indexSkill === -1) {
+        return;
+      }
+      const skill = classSkills[indexSkill];
+      const damage = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
+      // add the skill and its damage to the array
+      skillsArray.push([skill, damage]);
+      // remove the chosen skill from the choices
+      classSkills.splice(indexSkill, 1);
     }
-    const skill1 = classSkills[indexSkill1];
-    const damage1 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-
-    // Second Skill
-    classSkills.splice(indexSkill1, 1);
-    const indexSkill2 = rs.keyInSelect(
-      classSkills,
-      "Enter the index of the second skill you want: "
-    );
-    // if CANCEL return
-    if (indexSkill2 === -1) {
-      return;
-    }
-    const skill2 = classSkills[indexSkill2];
-    const damage2 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
-
-    // Third Skill
-    classSkills.splice(indexSkill2, 1);
-    const indexSkill3 = rs.keyInSelect(
-      classSkills,
-      "Enter the index of the third skill you want: "
-    );
-    // if CANCEL return
-    if (indexSkill3 === -1) {
-      return;
-    }
-    const skill3 = classSkills[indexSkill3];
-    const damage3 = Math.round(Math.random() * 10) + 10; // damage from 10 to 20
 
     // create a new instance of character using the inputs given
     const player = new Character(name, job, [
-      { skillName: skill1, damage: damage1 },
-      { skillName: skill2, damage: damage2 },
-      { skillName: skill3, damage: damage3 },
+      { skillName: skillsArray[0][0], damage: skillsArray[0][1] },
+      { skillName: skillsArray[1][0], damage: skillsArray[1][1] },
+      { skillName: skillsArray[2][0], damage: skillsArray[2][1] },
     ]);
 
     // add the new character to the array players and update the json file
@@ -429,7 +417,7 @@ function chooseOrCreateCharacter() {
       break;
     default:
       console.clear();
-      console.log("\n❌","Invalid Input!".bgRed);
+      console.log("\n❌", "Invalid Input!".bgRed);
       rs.question("\nPress Enter to continue...");
   }
   return player;
