@@ -3,6 +3,8 @@ import cl from "colors";
 
 // import rPGGame class instance from main
 import { rPGGame } from "../main.js";
+// import variables
+import { dungeon1, dungeon2, dungeon3 } from "./variables.js";
 
 // functions
 export function chooseOrCreateCharacter() {
@@ -44,4 +46,17 @@ export function chooseOrCreateCharacter() {
       rs.question("\nPress Enter to continue...");
   }
   return player;
+}
+
+export function chooseDungeon() {
+  const dungeons = [dungeon1, dungeon2, dungeon3];
+  // choose the dungeon to explore
+  console.clear();
+  console.log("__ Choose the Dungeon to explore __".yellow.bold);
+  dungeons.forEach((dungeon, index) =>
+    console.log(`${index + 1}.\n${dungeon.displayInfo()}`)
+  );
+  const indexDungeon = Number(rs.question("Enter the index of the dungeon: "));
+  if(!dungeons[indexDungeon - 1]) return undefined;
+  return dungeons[indexDungeon - 1];
 }

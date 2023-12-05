@@ -16,7 +16,9 @@ export default class Dungeon {
       _______________ ${this.name} _______________
   
         - Number of Floors: ${this.numberOfFloors}
-        - Monsters: ${this.monsters.map((monster) => monster.name).join(", ")}
+        - Monsters: ${this.monsters
+          .map((monster) => monster.name)
+          .join("\n                    ")}
         - Monster Boss: ${this.boss.name}
       ____________________________________________
       `.green;

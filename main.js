@@ -8,17 +8,13 @@ import Dungeon from "./utilities/Dungeon.js";
 
 // import variables
 import { fantasyClasses } from "./utilities/array-of-fantasy-classes.js";
-import {
-  char1,
-  char2,
-  char3,
-  char4,
-  char5,
-  dungeon,
-} from "./utilities/variables.js";
+import { char1, char2, char3, char4, char5 } from "./utilities/variables.js";
 
 // import functions
-import { chooseOrCreateCharacter } from "./utilities/functions.js";
+import {
+  chooseOrCreateCharacter,
+  chooseDungeon,
+} from "./utilities/functions.js";
 
 // Define a class to represent the game
 class RPGGame {
@@ -261,6 +257,11 @@ while (true) {
       target.hp = 100;
       break;
     case "2":
+      const dungeon = chooseDungeon();
+      if (dungeon === undefined) {
+        console.log("\nInvalid Input!".bgRed);
+        break;
+      }
       // explore dungeon
       const hpBeforeDungeon = player.hp;
       console.clear();
