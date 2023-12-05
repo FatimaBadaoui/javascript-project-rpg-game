@@ -259,7 +259,7 @@ while (true) {
     case "2":
       const dungeon = chooseDungeon();
       if (dungeon === undefined) {
-        console.log("❌","\nInvalid Input!".bgRed);
+        console.log("\n❌","Invalid Input!".bgRed);
         break;
       }
       // explore dungeon
