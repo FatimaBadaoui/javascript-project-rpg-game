@@ -85,21 +85,21 @@ export const dungeon1 = new Dungeon(
 
 // 2nd Dungeon
 const elemental = new Character(
-  "Thunder Elemental",
+  "⚡ Thunder Elemental",
   "Elemental",
   [{ skillName: "Lightning Bolt", damage: 8 }],
   30,
   1
 );
 const golem = new Character(
-  "Golem of Stone",
+  "🗿 Golem of Stone",
   "Golem",
   [{ skillName: "Earthen Slam", damage: 12 }],
   50,
   1
 );
 const griffin = new Character(
-  "Sable Griffin",
+  "🦅 Sable Griffin",
   "Monster",
   [
     { skillName: "Razor Talons", damage: 15 },
@@ -109,7 +109,7 @@ const griffin = new Character(
   2
 );
 const gorgon = new Character(
-  "Magma Gorgon",
+  "🔥 Magma Gorgon",
   "Monster",
   [
     { skillName: "Molten Gaze", damage: 17 },
@@ -119,7 +119,7 @@ const gorgon = new Character(
   3
 );
 const phoenix = new Character(
-  "Crystal Phoneix",
+  "🐦‍🔥 Crystal Phoneix",
   "Phoenix",
   [
     { skillName: "Shattering Blaze", damage: 25 },
@@ -138,21 +138,21 @@ export const dungeon2 = new Dungeon(
 
 // 3rd dungeon
 const wraith = new Character(
-  "Shadow Wraith",
+  "💀 Shadow Wraith",
   "Undead",
   [{ skillName: "Spectral Grasp", damage: 10 }],
   60,
   2
 );
 const chimera = new Character(
-  "Chimera",
+  "🦁🐍 Chimera",
   "Monster",
   [{ skillName: "Multi-headed Fury", damage: 14 }],
   80,
   2
 );
 const specter = new Character(
-  "Frost Specter",
+  "❄️👻 Frost Specter",
   "Undead",
   [
     { skillName: "Frozen Touch", damage: 17 },
@@ -162,7 +162,7 @@ const specter = new Character(
   2
 );
 const succubus = new Character(
-  "Demon Succubus",
+  "👿 Demon Succubus",
   "Demon",
   [
     { skillName: "Seductive Hex", damage: 19 },
@@ -172,7 +172,7 @@ const succubus = new Character(
   3
 );
 const knight = new Character(
-  "Death Knight",
+  "💀🗡️ Death Knight",
   "Undead",
   [
     { skillName: "Cursed Slash", damage: 22 },
@@ -183,7 +183,7 @@ const knight = new Character(
   3
 );
 const banshee = new Character(
-  "Spectral Banshee",
+  "🦹‍♀️ Spectral Banshee",
   "Undead",
   [
     { skillName: "Wail of the Damned", damage: 20 },
