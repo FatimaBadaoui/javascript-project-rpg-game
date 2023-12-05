@@ -1,13 +1,16 @@
 import rs from "readline-sync";
-import fs from "fs";
 import cl from "colors";
+import fs from "fs";
 
 //import classes
-import Character from "./Character.js";
-import Dungeon from "./Dungeon.js";
+import Character from "./utilities/Character.js";
+import Dungeon from "./utilities/Dungeon.js";
 
 // import variables
-import { fantasyClasses } from "./array-of-fantasy-classes.js";
+import { fantasyClasses } from "./utilities/array-of-fantasy-classes.js";
+
+// import functions
+import { chooseOrCreateCharacter } from "./utilities/functions.js";
 
 // Define a class to represent the game
 class RPGGame {
@@ -228,7 +231,7 @@ const char5 = new Character("Darvin", "Necromancer", [
 ]);
 
 // Create an instance of the RPG Game
-const rPGGame = new RPGGame("Swords and Magic", [
+export const rPGGame = new RPGGame("Swords and Magic", [
   char1,
   char2,
   char3,
@@ -290,7 +293,7 @@ const dungeon = new Dungeon(
   dragon
 );
 
-// Interaction
+/*  Interaction  */
 
 // Choose or Create a character
 let player;
@@ -383,46 +386,4 @@ while (true) {
   }
 
   rs.question("\nPress Enter to continue...");
-}
-
-// functions
-function chooseOrCreateCharacter() {
-  console.log("\nTo start playing create or choose your character\n");
-  console.log("1. Create a new character".blue);
-  console.log("2. Log back into the game".blue);
-  console.log("3. Choose a default character and Play as a guest".blue);
-
-  const choice = rs.question("\nEnter your choice: ");
-
-  let player;
-
-  switch (choice) {
-    case "1":
-      // create new character
-      console.clear();
-      console.log("__ Let's create a new character __\n".cyan);
-      player = rPGGame.createNewcharacter();
-      console.log("\nCharacter successfully created!".bgGreen);
-      break;
-
-    case "2":
-      // Log in with your character
-      console.clear();
-      console.log("__ Log Back In __".cyan);
-      player = rPGGame.logBackIn();
-      break;
-    case "3":
-      //list all default character
-      console.clear();
-      console.log(
-        "__ Choose from the List of the default characters: __\n".cyan
-      );
-      player = rPGGame.playAsGuest();
-      break;
-    default:
-      console.clear();
-      console.log("\n❌", "Invalid Input!".bgRed);
-      rs.question("\nPress Enter to continue...");
-  }
-  return player;
 }

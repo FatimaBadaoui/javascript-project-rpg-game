@@ -65,7 +65,10 @@ export default class Dungeon {
           }s on this floor.`.cyan
         );
         rPGGame.playerVsPlayer(player, floor[i], initialHPPlayer);
-        console.log("\n_____________________________________________________________\n".yellow.bold);
+        console.log(
+          "\n_____________________________________________________________\n"
+            .yellow.bold
+        );
         if (player.hp <= 0) return;
       }
       // proceed to the next floor
