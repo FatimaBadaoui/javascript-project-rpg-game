@@ -52,9 +52,9 @@ export function chooseDungeon() {
   const dungeons = [dungeon1, dungeon2, dungeon3];
   // choose the dungeon to explore
   console.clear();
-  console.log("__ Choose the Dungeon to explore __".yellow.bold);
+  console.log("\n__ Choose the Dungeon to explore __\n".yellow.bold);
   dungeons.forEach((dungeon, index) =>
-    console.log(`${index + 1}.\n${dungeon.displayInfo()}`)
+    console.log(`${index + 1}.${dungeon.displayInfo()}`)
   );
   const indexDungeon = Number(rs.question("Enter the index of the dungeon: "));
   if(!dungeons[indexDungeon - 1]) return undefined;

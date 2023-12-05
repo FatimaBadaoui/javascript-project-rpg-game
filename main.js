@@ -203,6 +203,10 @@ class RPGGame {
       // reset player hp before boss floor
       player.hp = initialHP;
       dungeon.fightBoss(rPGGame, player);
+      // if boss is defeated then reset dungeon
+      if(dungeon.boss.hp <= 0){
+        dungeon.currentFloor = 1;
+      }
     }
   }
 }
