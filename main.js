@@ -8,6 +8,14 @@ import Dungeon from "./utilities/Dungeon.js";
 
 // import variables
 import { fantasyClasses } from "./utilities/array-of-fantasy-classes.js";
+import {
+  char1,
+  char2,
+  char3,
+  char4,
+  char5,
+  dungeon,
+} from "./utilities/variables.js";
 
 // import functions
 import { chooseOrCreateCharacter } from "./utilities/functions.js";
@@ -203,33 +211,6 @@ class RPGGame {
   }
 }
 
-// create instances of default characters
-const char1 = new Character("Eowyn", "Knight", [
-  { skillName: "Pierce", damage: 15 },
-  { skillName: "Slash", damage: 10 },
-  { skillName: "Raging Blade", damage: 18 },
-]);
-const char2 = new Character("Elora", "Fire Mage", [
-  { skillName: "Fireball", damage: 12 },
-  { skillName: "Fire Arrow", damage: 10 },
-  { skillName: "Inferno", damage: 20 },
-]);
-const char3 = new Character("Galadriel", "Hunter", [
-  { skillName: "Attack Boost", damage: 12 },
-  { skillName: "Bombardier", damage: 15 },
-  { skillName: "Critical Boost", damage: 18 },
-]);
-const char4 = new Character("Thalia", "Archer", [
-  { skillName: "Wind Arrow", damage: 10 },
-  { skillName: "Earth Blast", damage: 20 },
-  { skillName: "Vicious Arrow", damage: 15 },
-]);
-const char5 = new Character("Darvin", "Necromancer", [
-  { skillName: "Skeleton Attack", damage: 10 },
-  { skillName: "Soul Curse", damage: 20 },
-  { skillName: "Corpse Explosion", damage: 17 },
-]);
-
 // Create an instance of the RPG Game
 export const rPGGame = new RPGGame("Swords and Magic", [
   char1,
@@ -239,62 +220,7 @@ export const rPGGame = new RPGGame("Swords and Magic", [
   char5,
 ]);
 
-// Create Monsters characters and add the to the dungeon
-const slime = new Character(
-  "👾 Slime",
-  "Monster",
-  [{ skillName: "Bounce", damage: 5 }],
-  20,
-  1
-);
-const goblin = new Character(
-  "👺 Goblin",
-  "Monster",
-  [{ skillName: "Toxic Slam", damage: 10 }],
-  40,
-  1
-);
-const orc = new Character(
-  "👹 Orc",
-  "Monster",
-  [
-    { skillName: "Intimidation", damage: 12 },
-    { skillName: "Brute Punch", damage: 15 },
-  ],
-  60,
-  2
-);
-const Lich = new Character(
-  "💀 Lich",
-  "Undead",
-  [
-    { skillName: "Paralise", damage: 15 },
-    { skillName: "Curse", damage: 20 },
-  ],
-  90,
-  3
-);
-const dragon = new Character(
-  "Celestial Dragon 🐉",
-  "Dragon",
-  [
-    { skillName: "Breath", damage: 20 },
-    { skillName: "Fire Storm", damage: 25 },
-    { skillName: "Rage", damage: 18 },
-  ],
-  200,
-  5
-);
-
-const dungeon = new Dungeon(
-  "Dragon's Lair",
-  5,
-  [slime, goblin, orc, Lich],
-  dragon
-);
-
 /*  Interaction  */
-
 // Choose or Create a character
 let player;
 while (!player) {
