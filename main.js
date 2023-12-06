@@ -204,7 +204,7 @@ class RPGGame {
       player.hp = initialHP;
       dungeon.fightBoss(rPGGame, player);
       // if boss is defeated then reset dungeon
-      if(dungeon.boss.hp <= 0){
+      if (dungeon.boss.hp <= 0) {
         dungeon.currentFloor = 1;
       }
     }
@@ -246,6 +246,7 @@ while (true) {
       // randon player to fight
       //before the fight save the player hp in a variable
       const initialHP = player.hp;
+      const initialXP = player.xp;
       // new array with all the other players with whom the user can fight
       const otherPlayers = rPGGame.players.filter(
         (otherPlayer) => otherPlayer.name !== player.name
@@ -257,22 +258,23 @@ while (true) {
       console.log(`__ ${player.name} VS ${target.name} __\n`.yellow.bold);
       rPGGame.playerVsPlayer(player, target, player.hp);
       // reset hp and level up (every 5 xp is 1 hp)
-      player.hp = initialHP + Math.round(player.xp / 5);
+      player.hp = initialHP + Math.round((player.xp - initialXP) / 5);
       target.hp = 100;
       break;
     case "2":
       const dungeon = chooseDungeon();
       if (dungeon === undefined) {
-        console.log("\n❌","Invalid Input!".bgRed);
+        console.log("\n❌", "Invalid Input!".bgRed);
         break;
       }
       // explore dungeon
       const hpBeforeDungeon = player.hp;
+      const xpBeforeDungeon = player.xp;
       console.clear();
       console.log(`__ Welcome to the ${dungeon.name} dungeon __`.yellow.bold);
       rPGGame.exploreDungeon(player, dungeon);
       // reset player HP and level up - every 5 xp is 1 hp
-      player.hp = hpBeforeDungeon + Math.round(player.xp / 5);
+      player.hp = hpBeforeDungeon + Math.round((player.xp - xpBeforeDungeon) / 5);
       break;
     case "3":
       // open status
