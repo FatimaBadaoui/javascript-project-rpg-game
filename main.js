@@ -161,13 +161,13 @@ class RPGGame {
         console.log("\n❌", "INVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
-      player.attack(target, indexSkill - 1, initialHPTarget);
+      player.action(target, indexSkill - 1, initialHPTarget);
       // if the target is K.O. exit the while without the target attack
       if (target.hp <= 0) {
         break;
       }
       // target turn
-      target.attack(
+      target.action(
         player,
         Math.floor(Math.random() * target.skills.length),
         initialHPPlayer

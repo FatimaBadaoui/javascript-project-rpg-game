@@ -18,7 +18,9 @@ export default class Character {
           - HP: ${this.hp} points
           - Skills: ${this.skills.map(
             (skill) =>
-              `\n\t\t${skill.skillName} (${skill.damage} damage ponits)`
+              `\n\t\t${skill.skillName} (${
+                skill.damage ? skill.damage : skill.recover
+              } ponits)`
           )}
           - XP: ${this.xp} points
           ---------------------------------------------
@@ -35,13 +37,23 @@ export default class Character {
     }
     return hPBar;
   }
-  attack(target, indexSkill, initialHP) {
-    target.hp -= this.skills[indexSkill].damage;
-    console.log(
-      `\n💥 ${this.name} attacked ${target.name} with a ${this.skills[indexSkill].skillName} giving a damage of ${this.skills[indexSkill].damage}. \n${target.name}'s hp (${target.hp}):`
-        .gray,
-      target.showHP(initialHP)
-    );
+  action(target, indexSkill, initialHP) {
+    const skill = this.skills[indexSkill];
+    if (skill.damage) {
+      target.hp -= this.skills[indexSkill].damage;
+      console.log(
+        `\n💥 ${this.name} attacked ${target.name} with a ${skill.skillName} giving a damage of ${skill.damage}. \n${target.name}'s hp (${target.hp}):`
+          .gray,
+        target.showHP(initialHP)
+      );
+    } else {
+      this.hp += skill.recover;
+      console.log(
+        `\n ${this.name} used ${skill.skillName} to recover ${skill.recover} hp.\n${this.name}'s hp (${this.hp}):`
+          .gray,
+        this.showHP(initialHP)
+      );
+    }
   }
   listSkills() {
     console.log(`
@@ -56,7 +68,8 @@ export default class Character {
   addEXPPoints(indexSkill, points) {
     if (points > this.xp) {
       console.log(
-        "\n❌", `You only have ${this.xp} points. You can't add more!`.bgRed
+        "\n❌",
+        `You only have ${this.xp} points. You can't add more!`.bgRed
       );
     } else {
       this.skills[indexSkill].damage += points;
