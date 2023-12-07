@@ -37,21 +37,22 @@ export default class Character {
     }
     return hPBar;
   }
-  action(target, indexSkill, initialHP) {
+  action(target, indexSkill, initialHPPlayer, initialHPTarget) {
     const skill = this.skills[indexSkill];
     if (skill.damage) {
       target.hp -= this.skills[indexSkill].damage;
       console.log(
         `\n💥 ${this.name} attacked ${target.name} with a ${skill.skillName} giving a damage of ${skill.damage}. \n${target.name}'s hp (${target.hp}):`
           .gray,
-        target.showHP(initialHP)
+        target.showHP(initialHPTarget)
       );
     } else {
-      this.hp += skill.recover;
+      if(this.hp + skill.recover > initialHPPlayer) this.hp = initialHPPlayer;
+      else this.hp += skill.recover;
       console.log(
         `\n ${this.name} used ${skill.skillName} to recover ${skill.recover} hp.\n${this.name}'s hp (${this.hp}):`
           .gray,
-        this.showHP(initialHP)
+        this.showHP(this.hp)
       );
     }
   }
@@ -60,7 +61,7 @@ export default class Character {
       ${this.name}'s skills:
       ${this.skills.map(
         (skill, index) =>
-          `\n\t${index + 1}. ${skill.skillName} (${skill.damage} damage points)`
+          `\n\t${index + 1}. ${skill.skillName} (${skill.damage ? skill.damage : skill.recover} points)`
             .green
       )}
       `);
