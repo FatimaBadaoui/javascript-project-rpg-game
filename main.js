@@ -48,6 +48,7 @@ class RPGGame {
   }
 
   listCharacters() {
+    // list the default character
     this.characters.forEach((character, index) =>
       console.log(`${index + 1}.\n ${character.openStatus()}`)
     );

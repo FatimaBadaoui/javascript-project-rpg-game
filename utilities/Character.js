@@ -27,6 +27,7 @@ export default class Character {
           `.blue;
   }
   showHP(initialHP) {
+    // show hp bar in 20 squares, with green representing the remaining hp and red the lost hp 
     let hPBar = "";
     for (let i = 0; i < 20; i++) {
       if (i < Math.floor(this.hp / Math.round(initialHP / 20))) {
@@ -39,6 +40,7 @@ export default class Character {
   }
   action(target, indexSkill, initialHPPlayer, initialHPTarget) {
     const skill = this.skills[indexSkill];
+    // check if the skill has a damage property if not it means the player used a recovery skill
     if (skill.damage) {
       target.hp -= this.skills[indexSkill].damage;
       console.log(

@@ -40,6 +40,7 @@ export default class Dungeon {
   }
   fightMonsters(rPGGame, player) {
     const initialHPPlayer = player.hp;
+    // fight monsters until the player  lose or they reach the boss floor
     while (player.hp > 0 && this.currentFloor < this.numberOfFloors) {
       const monster = this.monsters[this.currentFloor - 1];
       console.clear();
