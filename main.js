@@ -109,6 +109,7 @@ class RPGGame {
         { skillName: skillsArray[0][0], damage: skillsArray[0][1] },
         { skillName: skillsArray[1][0], damage: skillsArray[1][1] },
         { skillName: skillsArray[2][0], damage: skillsArray[2][1] },
+        { skillName: "Heal", recover: 10}
       ]
     );
 

@@ -72,7 +72,9 @@ export default class Character {
         `You only have ${this.xp} points. You can't add more!`.bgRed
       );
     } else {
-      this.skills[indexSkill].damage += points;
+      // check if the skill is an attack skill or a recovery skill
+      const key = this.skills[indexSkill].damage ? "damage" : "recover";
+      this.skills[indexSkill][key] += points;
       this.xp -= points;
       console.log(`\n${points} points were added successfully!`.bgGreen);
     }

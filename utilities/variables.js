@@ -6,16 +6,19 @@ export const char1 = new Character("Eowyn", "Knight", [
   { skillName: "Pierce", damage: 15},
   { skillName: "Slash", damage: 10},
   { skillName: "Raging Blade", damage: 18},
+  { skillName: "Heal", recover: 10},
 ]);
 export const char2 = new Character("Elora", "Fire Mage", [
   { skillName: "Fireball", damage: 12},
   { skillName: "Fire Arrow", damage: 10},
   { skillName: "Inferno", damage: 20},
+  { skillName: "Heal", recover: 10},
 ]);
 export const char3 = new Character("Galadriel", "Hunter", [
   { skillName: "Attack Boost", damage: 12},
   { skillName: "Bombardier", damage: 15},
   { skillName: "Critical Boost", damage: 18},
+  { skillName: "Heal", recover: 10},
 ]);
 export const char4 = new Character("Thalia", "Archer", [
   { skillName: "Wind Arrow", damage: 10},
@@ -27,6 +30,7 @@ export const char5 = new Character("Darvin", "Necromancer", [
   { skillName: "Skeleton Attack", damage: 10},
   { skillName: "Soul Curse", damage: 20},
   { skillName: "Corpse Explosion", damage: 17},
+  { skillName: "Heal", recover: 10},
 ]);
 
 // Create Monsters characters and add the to the dungeon
@@ -72,6 +76,7 @@ const dragon = new Character(
     { skillName: "Breath", damage: 20},
     { skillName: "Fire Storm", damage: 25},
     { skillName: "Rage", damage: 18},
+    { skillName: "Heal", recover: 15},
   ],
   200,
   5
@@ -125,6 +130,7 @@ const phoenix = new Character(
   [
     { skillName: "Shattering Blaze", damage: 25},
     { skillName: "Flame Breath", damage: 19},
+    { skillName: "Heal", recover: 18},
   ],
   250,
   7
@@ -191,6 +197,7 @@ const banshee = new Character(
     { skillName: "Horrifying Visage", damage: 25},
     { skillName: "Corrupting Touch", damage: 30},
     { skillName: "Sonic Boom", damage: 35},
+    { skillName: "Heal", recover: 20},
   ],
   300,
   8
