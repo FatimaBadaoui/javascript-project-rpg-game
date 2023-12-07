@@ -50,9 +50,9 @@ export default class Character {
       if(this.hp + skill.recover > initialHPPlayer) this.hp = initialHPPlayer;
       else this.hp += skill.recover;
       console.log(
-        `\n ${this.name} used ${skill.skillName} to recover ${skill.recover} hp.\n${this.name}'s hp (${this.hp}):`
+        `\n⛑️  ${this.name} used ${skill.skillName} to recover ${skill.recover} hp.\n${this.name}'s hp (${this.hp}):`
           .gray,
-        this.showHP(this.hp)
+        this.showHP(initialHPPlayer)
       );
     }
   }

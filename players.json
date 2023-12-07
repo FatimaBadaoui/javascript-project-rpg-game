@@ -230,7 +230,7 @@
   {
     "name": "Isolde",
     "job": "Enchanter",
-    "hp": 137,
+    "hp": 100,
     "skills": [
       { "skillName": "Enchant Weapon", "damage": 49 },
       { "skillName": "Buff", "damage": 42 },
@@ -264,7 +264,7 @@
     "xp": 0
   },
   {
-    "name": "Pelle the great",
+    "name": "Pelle_the_great",
     "job": "Bard",
     "hp": 100,
     "skills": [

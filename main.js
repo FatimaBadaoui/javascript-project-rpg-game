@@ -54,6 +54,11 @@ class RPGGame {
   }
   createNewcharacter() {
     const name = rs.question("Enter the name: ");
+    //check if name contains a space
+    if(name.includes(" ")){
+      rs.question("\nInvalid input! Space is not accepted. Press Enter to go back...".bgRed);
+      return undefined;
+    }
     // check if the name is already used by another player
     const alreadyInUse = this.players.find(
       (player) => player.name.toLowerCase() === name.toLowerCase()
@@ -162,7 +167,7 @@ class RPGGame {
         console.log("\n❌", "INVALID INPUT! TRY AGAIN...".bgRed);
         continue;
       }
-      player.action(target, indexSkill - 1,initialHPPlayer, initialHPTarget);
+      player.action(target, indexSkill - 1, initialHPPlayer, initialHPTarget);
       // if the target is K.O. exit the while without the target attack
       if (target.hp <= 0) {
         break;
@@ -171,7 +176,7 @@ class RPGGame {
       target.action(
         player,
         Math.floor(Math.random() * target.skills.length),
-        initialHPPlayer, initialHPTarget
+        initialHPTarget, initialHPPlayer
       );
 
       round++;
