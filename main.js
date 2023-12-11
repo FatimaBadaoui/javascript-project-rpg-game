@@ -239,7 +239,7 @@ while (!player) {
 // start the Game
 while (true) {
   console.clear();
-  console.log(`__ Weolcome player ${player.name} __`.america.bold);
+  console.log(`__ Welcome player ${player.name} __`.america.bold);
   console.log("\n1. Player vs player".blue);
   console.log("2. Explore a dungeon".blue);
   console.log("3. Open status".blue);
