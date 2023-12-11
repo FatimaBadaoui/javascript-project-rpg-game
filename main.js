@@ -158,7 +158,7 @@ class RPGGame {
     const initialHPTarget = target.hp;
     // fight until one of the players has no more hp
     while (player.hp > 0 && target.hp > 0) {
-      console.log(`\n------- Round ${round} -------`);
+      console.log(`\n---------------- Round ${round} ----------------`.america.bold);
       // player starts
       // choose the skill with which the player will attack the target
       player.listSkills();
