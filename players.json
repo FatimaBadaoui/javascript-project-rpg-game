@@ -242,14 +242,14 @@
   {
     "name": "Leo",
     "job": "Knight",
-    "hp": 100,
+    "hp": 108,
     "skills": [
-      { "skillName": "Slash", "damage": 22 },
+      { "skillName": "Slash", "damage": 32 },
       { "skillName": "Pierce", "damage": 61 },
-      { "skillName": "Double Pierce", "damage": 23 },
-      { "skillName": "Heal", "recover": 10 }
+      { "skillName": "Double Pierce", "damage": 33 },
+      { "skillName": "Heal", "recover": 30 }
     ],
-    "xp": 20
+    "xp": 22
   },
   {
     "name": "Lydia",
@@ -283,20 +283,8 @@
       { "skillName": "Magic Missile", "damage": 120 },
       { "skillName": "Chain Lightning", "damage": 91 },
       { "skillName": "Mind Control", "damage": 104 },
-      { "skillName": "Heal", "recover": 40, "damage": null }
+      { "skillName": "Heal", "recover": 40 }
     ],
     "xp": 15
-  },
-  {
-    "name": "Lina",
-    "job": "Mage",
-    "hp": 104,
-    "skills": [
-      { "skillName": "Thunderstorm", "damage": 10 },
-      { "skillName": "Ice Lance", "damage": 11 },
-      { "skillName": "Fireball", "damage": 31 },
-      { "skillName": "Heal", "recover": 10 }
-    ],
-    "xp": 0
   }
 ]
