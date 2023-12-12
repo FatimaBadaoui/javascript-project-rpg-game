@@ -2,7 +2,7 @@
 
 ## About the Project
 
-The idea was to recreate a fantasy RPg Game using only javascript and the output is on the console.
+The idea was to recreate a fantasy RPG Game using only javascript and the output is on the console.
 
 ### The game is devided in 2 parts:
 The part where the user create, choose or log back into the game.
